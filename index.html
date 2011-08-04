@@ -1,1 +1,89 @@
-My GitHub Page
+<!doctype html> 
+ 
+<html>
+  <head>
+    <title>Welcome | G-Node tools for MATLAB</title> 
+    <meta charset=utf-8> 
+    <link rel=stylesheet type=text/css href="static/style.css"> 
+    <script type=text/javascript 
+	    src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script> 
+ 
+  <style type=text/css> 
+    h1 { margin: 0 0 30px 0; background: url(static/logo.png) no-repeat center; height: 165px; }
+    h1 span, p.tagline { display: none; }
+  </style>
+  </head>
+<body>
+ 
+<div class=box> 
+  
+  
+    <h1><span>Welcome</span></h1> 
+  
+  <p class=nav> 
+    <a href="/">Overview</a> //
+    <a href="/">Documentation</a> //
+    <a href="http://apleonhardt.github.com/gnode-client-lib">G-Node JVM Library</a> //
+    <a href="http://www.incf.org">INCF</a> //
+    <a href="http://www.g-node.org">G-Node</a> 
+  </p>n
+  
+  <blockquote> 
+    gnode-client-matlab is a <a href="http://mathworks.com/">MATLAB</a>x toolbox that connects your workbench to the
+    G-Node datastore for electrophysiological recordings. It is MIT licensed, and
+    <a href="http://github.com/apleonhardt/gnode-client-matlab">open source</a>.
+  </blockquote> 
+  <p class=latestver> 
+    <strong>Latest Version:</strong> 
+    <a href="http://github.com/apleonhardt/gnode-client-matlab" title="Fork">0.1-alpha</a> 
+  <h2>Getting started</h2> 
+  <pre><span class=ig>% Put the toolbox on your path. Then do:</span>
+      
+<span class=ig>>>></span> c = gnode.init('/my/configuration/file.json');
+<span class=ig>>>></span> gnode.authenticate(c);
+<span class=ig>      [GNODE] SUCCESS<span>
+
+<span class=ig>% Back to work</span>
+<span class=ig>>>></span> plot(gnode.getdata(c, 'analogsignal_214'));</pre>
+ 
+  <h2>Core functions</h2> 
+  <pre><span class=ig>>>> </span>c = gnode.init(CONFIGURATION_FILE);
+<span class=ig>>>> </span>gnode.authenticate(c);
+<span class=ig>>>> </span>gnode.set_mode(c, 'command_line');
+
+<span class=ig>>>> </span>gnode.list(c, 'type')
+<span class=ig>>>> </span>gnode.children(c, 'id')
+<span class=ig>>>> </span>gnode.parent(c, 'id')
+
+<span class=ig>>>> </span>gnode.get_object(c, 'id')
+<span class=ig>>>> </span>gnode.get_info(c, 'id')
+<span class=ig>>>> </span>gnode.get_data(c, 'id')
+<span class=ig>>>> </span>gnode.get_recursive(c, 'id')
+
+<span class=ig>>>> </span> signal = gnode.get_object(c, 'analogsignal_324');
+<span class=ig>>>> </span> signal.data = transform(signal.data);
+<span class=ig>>>> </span> gnode.put(c, signal)
+
+<span class=ig>>>> </span> gnode.start_transaction(c)
+<span class=ig>>>> % (...)</span>
+<span class=ig>>>> </span> gnode.do(c)
+
+<span class=ig>>>> </span> gnode.kill(c)
+
+  <h2>Interested?</h2> 
+  <ul> 
+    <li><a href="http://github.com/apleonhardt/gnode-client-matlab">Download latest release</a> (0.1-alpha)
+    <li> 
+      <a href="/">Read the documentation</a> or download as
+      <a href="/">PDF</a> and
+      <a href="/">zipped HTML</a> 
+    li><a href="/">Join the mailinglist</a> 
+     <li><a href=http://github.com/apleonhardt/gnode-client-matlab/issues>Add issues and feature requests</a> 
+  </ul> 
+ 
+  <p class=footer> 
+    &copy; Copyright 2011 by <a href=http://www.g-node.org/>G-Node</a>
+    
+</div>
+</body>
+</html>
