@@ -52,40 +52,40 @@
 <span class=ig>>>> </span>c = gnode.init('/path/to/configuration.json');
 <span class=ig>>>></span>gnode.authenticate(c);
 
-% Modify session settings (e.g., logging/cache behaviour)
+<span class=ig>% Modify session settings (e.g., logging/cache behaviour)</span>
 <span class=ig>>>></span> gnode.set_mode(c, 'command_line');
 <span class=ig>>>></span> gnode.set_cache(c, 'mongodb@localhost:8888', 'all')
 
-% Explore your available data
+<span class ig>% Explore your available data</span>
 <span class=ig>>>></span> gnode.list(c, 'type')
 <span class=ig>>>></span> gnode.children(c, 'id')
 <span class=ig>>>></span> gnode.parent(c, 'id')
 
-% Pull NEO objects into local structures
+<span class=ig>% Pull NEO objects into local structures</span>
 <span class=ig>>>></span> object = gnode.get_object(c, 'id')
 <span class=ig>>>></span> plot(object.signal.data)
 <span class=ig>>>></span> object.signal.units
-ans =
+<span class=ig>ans =
 
-      mV
+      mV</span>
 
 <span class=ig>>>></span> gnode.get_info(c, 'id')
 <span class=ig>>>></span> gnode.get_data(c, 'id')
 
-% Fully *local* data representation
+<span class=ig>% Fully *local* data representation</span>
 <span class=ig>>>></span> gnode.get_recursive(c, 'id')
 
-% Get, manipulate and stash your results at G-Node
+<span class=ig>% Get, manipulate and stash your results at G-Node</span>
 <span class=ig>>>></span> signal = gnode.get_object(c, 'analogsignal_324');
 <span class=ig>>>></span> signal.data = transform(signal.data);
 <span class=ig>>>></span> gnode.put(c, signal)
 
-% Streamline workflow with transactions
+<span class=ig>% Streamline workflow with transactions</span>
 <span class=ig>>>></span> gnode.start_transaction(c)
 % (...)</span>
 <span class=ig>>>></span> gnode.do(c)
 
-% Clean up
+<span class=ig>% Clean up</span>
 <span class=ig>>>></span> gnode.kill(c)
 
   <h2>Interested?</h2> 
