@@ -24,51 +24,69 @@
     <a href="/">Overview</a> //
     <a href="/">Documentation</a> //
     <a href="http://apleonhardt.github.com/gnode-client-lib">G-Node JVM Library</a> //
-    <a href="http://www.incf.org">INCF</a> //
-    <a href="http://www.g-node.org">G-Node</a> 
-  </p>n
+    <a href="http://www.g-node.org">G-Node</a> //
+    <a href="http://www.incf.org">INCF</a>
+  </p>
   
   <blockquote> 
-    gnode-client-matlab is a <a href="http://mathworks.com/">MATLAB</a>x toolbox that connects your workbench to the
+    gnode-client-matlab is a <a href="http://mathworks.com/">MATLAB</a> toolbox that connects your workbench to the
     G-Node datastore for electrophysiological recordings. It is MIT licensed, and
     <a href="http://github.com/apleonhardt/gnode-client-matlab">open source</a>.
   </blockquote> 
   <p class=latestver> 
     <strong>Latest Version:</strong> 
-    <a href="http://github.com/apleonhardt/gnode-client-matlab" title="Fork">0.1-alpha</a> 
+    <a href="http://github.com/apleonhardt/gnode-client-matlab" title="Fork">0.1-alpha</a>
+    
   <h2>Getting started</h2> 
   <pre><span class=ig>% Put the toolbox on your path. Then do:</span>
       
 <span class=ig>>>></span> c = gnode.init('/my/configuration/file.json');
 <span class=ig>>>></span> gnode.authenticate(c);
-<span class=ig>      [GNODE] SUCCESS<span>
+<span class=ig>      [GNODE] SUCCESS</span>
 
 <span class=ig>% Back to work</span>
 <span class=ig>>>></span> plot(gnode.getdata(c, 'analogsignal_214'));</pre>
  
-  <h2>Core functions</h2> 
-  <pre><span class=ig>>>> </span>c = gnode.init(CONFIGURATION_FILE);
-<span class=ig>>>> </span>gnode.authenticate(c);
-<span class=ig>>>> </span>gnode.set_mode(c, 'command_line');
+  <h2>Core functions</h2>
+  <pre>% Basics
+<span class=ig>>>> </span>c = gnode.init('/path/to/configuration.json');
+<span class=ig>>>></span>gnode.authenticate(c);
 
-<span class=ig>>>> </span>gnode.list(c, 'type')
-<span class=ig>>>> </span>gnode.children(c, 'id')
-<span class=ig>>>> </span>gnode.parent(c, 'id')
+% Modify session settings (e.g., logging/cache behaviour)
+<span class=ig>>>></span> gnode.set_mode(c, 'command_line');
+<span class=ig>>>></span> gnode.set_cache(c, 'mongodb@localhost:8888', 'all')
 
-<span class=ig>>>> </span>gnode.get_object(c, 'id')
-<span class=ig>>>> </span>gnode.get_info(c, 'id')
-<span class=ig>>>> </span>gnode.get_data(c, 'id')
-<span class=ig>>>> </span>gnode.get_recursive(c, 'id')
+% Explore your available data
+<span class=ig>>>></span> gnode.list(c, 'type')
+<span class=ig>>>></span> gnode.children(c, 'id')
+<span class=ig>>>></span> gnode.parent(c, 'id')
 
-<span class=ig>>>> </span> signal = gnode.get_object(c, 'analogsignal_324');
-<span class=ig>>>> </span> signal.data = transform(signal.data);
-<span class=ig>>>> </span> gnode.put(c, signal)
+% Pull NEO objects into local structures
+<span class=ig>>>></span> object = gnode.get_object(c, 'id')
+<span class=ig>>>></span> plot(object.signal.data)
+<span class=ig>>>></span> object.signal.units
+ans =
 
-<span class=ig>>>> </span> gnode.start_transaction(c)
-<span class=ig>>>> % (...)</span>
-<span class=ig>>>> </span> gnode.do(c)
+      mV
 
-<span class=ig>>>> </span> gnode.kill(c)
+<span class=ig>>>></span> gnode.get_info(c, 'id')
+<span class=ig>>>></span> gnode.get_data(c, 'id')
+
+% Fully *local* data representation
+<span class=ig>>>></span> gnode.get_recursive(c, 'id')
+
+% Get, manipulate and stash your results at G-Node
+<span class=ig>>>></span> signal = gnode.get_object(c, 'analogsignal_324');
+<span class=ig>>>></span> signal.data = transform(signal.data);
+<span class=ig>>>></span> gnode.put(c, signal)
+
+% Streamline workflow with transactions
+<span class=ig>>>></span> gnode.start_transaction(c)
+% (...)</span>
+<span class=ig>>>></span> gnode.do(c)
+
+% Clean up
+<span class=ig>>>></span> gnode.kill(c)
 
   <h2>Interested?</h2> 
   <ul> 
@@ -77,7 +95,7 @@
       <a href="/">Read the documentation</a> or download as
       <a href="/">PDF</a> and
       <a href="/">zipped HTML</a> 
-    li><a href="/">Join the mailinglist</a> 
+   <li><a href="/">Join the mailinglist</a> 
      <li><a href=http://github.com/apleonhardt/gnode-client-matlab/issues>Add issues and feature requests</a> 
   </ul> 
  
