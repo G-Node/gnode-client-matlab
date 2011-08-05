@@ -5,7 +5,7 @@ function session = init(filename)
 	 end
 
 	 if (filename == 'default'),
-	    filename = [pwd() '/default-config.json'];
+	    filename = fullfile(pwd, '/default-config.json');
 	 end
 	 
 	 import gnode.*;
