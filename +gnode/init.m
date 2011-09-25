@@ -1,33 +1,39 @@
-function session = init(filename)
+function session = init(filename, password, server)
 
-	 if (nargin < 1),
-	    error('[GNODE] No configuration specified');
-	 end
+  import gnode.*;
 
-	 if (filename == 'default'),
-	    filename = fullfile(pwd, '/default-config.json');
-	 end
+  set_up_classpath();
+
+  import org.gnode.lib.client.*;
+  import org.gnode.lib.conf.*;
+
+  if (nargin == 1)
+
+    if (strcmp(filename, 'default'))
+      filename = fullfile(pwd, '/default-config.json');
+    end
+  
+    settings_some = ConfigurationReader.fromFile(filename);
+    try
+      settings = settings_some.get();
+    catch
+      settings = Default.CONFIGURATION;
+    end
+
+  elseif (nargin == 3)
+
+    c = Default.CONFIGURATION;
+    settings = ConfigurationReader.create(filename, password, server, c.port, c.path, c.apiDefinition, c.caching, c.db);
+
+  else
+
+    settings = Default.CONFIGURATION;
+
+  end
 	 
-	 import gnode.*;
+  t = TransferManager(settings);
 
-	 set_up_classpath();
-
-	 import org.gnode.lib.*;
-	 import org.gnode.lib.conf.*;
-
-	 % Configuration reader emits a Scala object of type:
-	 %   Option[Configuration]
-	 % which provides stronger null safety.
-	 %
-	 % Actual instance retrievable via get()-method.
-
-	 settings_some = ConfigurationReader.fromFile(filename);
-	 settings = settings_some.get();
-	 
-	 c = Connector(settings);
-
-	 session.connector = c;
-	 session.settings = settings;
+  session.connector = t;
+  session.settings = settings;
 
 end
-	 
