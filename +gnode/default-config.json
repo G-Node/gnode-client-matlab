@@ -1,0 +1,20 @@
+{
+
+    "_comment": "G-NODE CONFIGURATION FILE",
+    "_comment": "Required fields:"
+    "required": ["username", "password", "host", "port", "path",
+		 "apiVersion", "caching", "db"],
+    
+    "username": "bob",
+    "password": "pass",
+    
+    "host": "hal10.g-node.pri",
+    "port": 80,
+    "path": "neo",
+
+    "apiDefinition": "requirements.json",
+
+    "caching" : "MEMORY",
+    "db": ""
+    
+}
