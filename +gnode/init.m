@@ -10,7 +10,7 @@ function session = init(filename, password, server)
   if (nargin == 1)
 
     if (strcmp(filename, 'default'))
-      filename = fullfile(pwd, '/default-config.json');
+      filename = '/home/aleonhardt/gnode/aljoscha.json';
     end
   
     settings_some = ConfigurationReader.fromFile(filename);
