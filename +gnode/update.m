@@ -1,14 +1,22 @@
 function u = update(session, obj, id)
 
+  import gnode.*;
+  
   % Update only possible with explicitly specified ID, either per
   % argument or as 'neo_id' field on input structure.
-	 
+  
   if (nargin < 3)
     if (isfield(obj, 'neo_id'))
       id = obj.neo_id;
     else
       error('[GNODE] Cannot perform update without neo_id. Please specify');
     end
+  end
+
+  % Validate object
+
+  if (~validate(session, obj))
+    error('[GNODE] Object did not pass validation. Please adjust');
   end
 
   % Serialize from MATLAB struct to NEObject

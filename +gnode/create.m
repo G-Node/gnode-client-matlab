@@ -1,5 +1,7 @@
 function id = create(session, obj, object_type)
 
+  import gnode.*;
+	 
   % Check if object type is specified. If not, fall back on
   % 'obj_type' field. If that can't be found, raise error.
 
@@ -9,6 +11,12 @@ function id = create(session, obj, object_type)
     else
       error('[GNODE] Cannot perform create without object type. Please specify');
     end
+  end
+
+  % Validate
+
+  if (~validate(session, obj, object_type))
+    error('[GNODE] Object did not pass validation. Please adjust');
   end
 
   % Serialize from MATLAB struct to NEObject
