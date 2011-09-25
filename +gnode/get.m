@@ -13,7 +13,7 @@ function s = get(session, request)
 
   else
 
-    for k = 1:size(request,2)
+    for k = 1:size(request,1)
       obj = session.connector.retrieve(request{k});
       if (~is_none(obj))
 	my_objects{k} = serialize(obj.get);

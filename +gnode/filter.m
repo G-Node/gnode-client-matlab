@@ -4,7 +4,13 @@ function new = filter(session, obj, object_type)
   % contracts specified in session.validator.
 
   if (nargin < 3)
-    error('[GNODE] Object type necessary. Please specify');
+    import org.gnode.lib.matlab.Helper;
+    try
+      id = obj.neo_id;
+      object_type = Helper.guessType(id);
+    catch
+      error('[GNODE] Object type necessary. Please specify');
+    end
   end
 
   legal_fields = cell(session.connector.validator.getAll(object_type));
