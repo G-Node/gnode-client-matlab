@@ -7,6 +7,6 @@ function l = get_range(session, object_type, start, stop)
     ids{i} = [object_type '_' num2str((start -1) + i)];
   end
 
-  l = gnode.get(session, ids);
+  l = gnode.get(session, ids.');
 
 end
