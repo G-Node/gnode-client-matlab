@@ -33,13 +33,11 @@ function modified = connect(session, obj1, obj2, remote)
   parents2 = cell(session.connector.validator.getParents(type2));
 
   children1 = cell(session.connector.validator.getChildren(type1));
-  children2 = cell(session.connector.validator.getParents(type2));
-
-  %fprintf('ismember(parents2, type1) is %d\nismember(children1, type2) is %d\nismember(parents1, type2) is %d\nismember(children2, type1) is %d\n', ismember(parents2, type1), ismember(children1, type2), ismember(parents1, type2), ismember(children2, type1));
+  children2 = cell(session.connector.validator.getChildren(type2));
 
   type1 = char(type1);
   type2 = char(type2);
-  
+
   if (~((any(ismember(parents2, type1)) && any(ismember(children1, type2))) || (any(ismember(parents1, type2)) && any(ismember(children2, type1)))))
     error('[GNODE] Objects cannot be connected!');
   end
