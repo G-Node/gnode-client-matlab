@@ -13,7 +13,12 @@ function neo_obj = deserialize(s)
       if (~iscell(value))
 	b.add(name, value);
       elseif (size(value, 1) > 1)
-	b.add(name, value);
+	% Make Java array
+	arr = javaArray('java.lang.String', size(value, 1));
+	for i = 1:size(value,1)
+	    arr(i) = java.lang.String(value(i));
+	end
+	b.add(name, arr);
       elseif (size(value, 1) == 1)
 	b.add(name, value{1});
       end
