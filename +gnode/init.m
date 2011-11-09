@@ -1,3 +1,85 @@
+function session = init(filename, password, server)
+  %INIT Creates a G-Node data store session, returning a *structure*
+  %that is passed to most G-Node utility methods.
+  %
+  %  g = init('DEFAULT') returns a session g defaulting to standard
+  %  settings. This configuration can be found (and, if necessary,
+  %  modified) under $TBDIR/default.json.
+  %
+  %  g = init(username, password, server) returns a session g using
+  %  specified authentication/server settings but defaulting to
+  %  $TBDIR/default.json for everything else.
+
+  import gnode.*;
+
+  set_up_classpath();
+
+  import org.gnode.lib.client.*;
+  import org.gnode.lib.conf.*;
+
+  % Settings
+  toolbox_name = 'gnode';
+  config_file = 'default.json';
+  
+  default_config_location = fullfile(toolboxdir(toolbox_name), config_file);
+
+  % Helper
+  function default_configuration = get_default
+	   
+    settings_some = ConfigurationReader.fromFile(default_config_location);
+
+    try
+      settings = settings_some.get();
+    catch
+      error('[GNODE] Could not initialize from configuration');
+    end
+
+    default_configuration = settings
+
+  end
+
+  % Determine intended configuration source
+  if (nargin == 1)
+
+    if (strcmp(filename, 'default'))
+
+      settings = get_default();
+
+    else
+    
+      settings_some = ConfigurationReader.fromFile(filename);
+      
+      try
+	settings = settings_some.get();
+      catch
+	settings = get_default();
+      end
+
+    end
+
+  elseif (nargin == 3)
+
+    default_settings = get_default();
+    settings = ConfigurationReader.create(filename, password, server, default_settings.port,
+					  default_settings.path, default_settings.apiDefinition, default_settings.caching, default_settings.db);
+
+  else
+
+    settings = get_default();
+
+  end
+
+  try
+    t = TransferManager(settings);
+  catch
+    error('[GNODE] Could not initialize session from specified configuration');
+  end
+
+  session.connector = t; % Store transfer manager
+  session.settings = settings; % Keep configuration
+
+end
+
 % Copyright (C) 2011 by German Neuroinformatics Node (www.g-node.org)
 % 
 % Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -17,55 +99,3 @@
 % LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 % OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 % THE SOFTWARE.
-
-function session = init(filename, password, server)
-  %INIT Creates a G-Node data store session, returning a *structure*
-  %that is passed to most G-Node utility methods.
-  %
-  %  g = init('DEFAULT') returns a session g defaulting to standard
-  %  settings. This configuration can be found (and, if necessary,
-  %  modified) under $TBDIR/default.json.
-  %
-  %  g = init(username, password, server) returns a session g using
-  %  specified authentication/server settings but defaulting to
-  %  $TBDIR/default.json for everything else.
-  %
-  %  g = 
-
-  import gnode.*;
-
-  set_up_classpath();
-
-  import org.gnode.lib.client.*;
-  import org.gnode.lib.conf.*;
-
-  if (nargin == 1)
-
-    if (strcmp(filename, 'default'))
-      filename = '/home/aleonhardt/gnode/aljoscha.json';
-    end
-  
-    settings_some = ConfigurationReader.fromFile(filename);
-    try
-      settings = settings_some.get();
-    catch
-      settings = Default.CONFIGURATION;
-    end
-
-  elseif (nargin == 3)
-
-    c = Default.CONFIGURATION;
-    settings = ConfigurationReader.create(filename, password, server, c.port, c.path, c.apiDefinition, c.caching, c.db);
-
-  else
-
-    settings = Default.CONFIGURATION;
-
-  end
-	 
-  t = TransferManager(settings);
-
-  session.connector = t;
-  session.settings = settings;
-
-end
