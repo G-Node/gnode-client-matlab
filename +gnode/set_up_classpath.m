@@ -1,10 +1,9 @@
-%GNODE.SET_UP_CLASSPATH Initialises MATLAB JVM.
-% 
-%  No parameters. Uses toolboxdir() in order to determine location of the
-%  library JAR. Additionally, various JVM properties are set to sane
-%  standard values.
-
 function set_up_classpath()
+  %GNODE.SET_UP_CLASSPATH Initialises MATLAB JVM.
+  % 
+  %  No parameters. Uses toolboxdir() in order to determine location of the
+  %  library JAR. Additionally, various JVM properties are set to sane
+  %  standard values.
 
   % Settings
   toolbox_name = 'gnode';
