@@ -12,7 +12,7 @@ function session = init(filename, password, server)
 
   import gnode.*;
 
-  set_up_classpath();
+  % set_up_classpath();
 
   import org.gnode.lib.client.*;
   import org.gnode.lib.conf.*;
@@ -25,7 +25,8 @@ function session = init(filename, password, server)
 
   % Helper
   function default_configuration = get_default
-	   
+
+    import org.gnode.lib.conf.*; % Scope issue: reimport necessary
     settings_some = ConfigurationReader.fromFile(default_config_location);
 
     try
@@ -60,8 +61,7 @@ function session = init(filename, password, server)
   elseif (nargin == 3)
 
     default_settings = get_default();
-    settings = ConfigurationReader.create(filename, password, server, default_settings.port,
-					  default_settings.path, default_settings.apiDefinition, default_settings.caching, default_settings.db);
+    settings = ConfigurationReader.create(filename, password, server, default_settings.port, default_settings.path, default_settings.apiDefinition, default_settings.caching, default_settings.db);
 
   else
 
