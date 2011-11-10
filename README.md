@@ -119,7 +119,7 @@ creation and upload, and so on) are described in the [GMT wiki](https://github.c
 **A:** Unfortunately not. GMT makes heavy use of the JVM bridge provided by Mathworks. This
        bridge is under constant development. Various
        incompatibilities and lack of features make it unfeasible to support MATLAB versions
-       beyond R2008b.
+       before R2008b.
 
 **Q:** Is there any versioning support for my data (e.g., revert after destructive edit)?  
 **A:** Not yet.
@@ -130,4 +130,4 @@ creation and upload, and so on) are described in the [GMT wiki](https://github.c
 
 ## License
 
-GMT is MIT-licensed (see LICENSE).
+GMT is distributed under the MIT license (see `LICENSE`).
