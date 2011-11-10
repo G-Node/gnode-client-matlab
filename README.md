@@ -39,6 +39,7 @@ follow these steps:
 4. Open MATLAB.
 5. Check that your installation was successful by typing `import gnode.*;` at the
    MATLAB prompt. If there are no errors, you can start using the toolbox.
+6. Read the [documentation](https://github.com/g-node/gnode-client-matlab/wiki).
 
 If you want to track the development branch, follow these steps. NB,
 release channel updates may break compatibility or introduce bugs.
@@ -114,16 +115,16 @@ creation and upload, and so on) are described in the [GMT wiki](https://github.c
 
 ## FAQ
 
-**Q:** Is the G-Node toolbox compatible with older versions of MATLAB (i.e., before R2008b)?
+**Q:** Is the G-Node toolbox compatible with older versions of MATLAB (i.e., before R2008b)?  
 **A:** Unfortunately not. GMT makes heavy use of the JVM bridge provided by Mathworks. This
        bridge is under constant development. Various
        incompatibilities and lack of features make it unfeasible to support MATLAB versions
        beyond R2008b.
 
-**Q:** Is there any versioning support for my data (e.g., revert after destructive edit)?
+**Q:** Is there any versioning support for my data (e.g., revert after destructive edit)?  
 **A:** Not yet.
 
-**Q:** Can I contribute?
+**Q:** Can I contribute?  
 **A:** GMT is open-source; pull requests are always welcome. As a user, please report
        any bugs or missing features on the Issue Tracker.
 
