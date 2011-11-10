@@ -5,7 +5,7 @@
 > experimental and theoretical neuroscientists. To fully harvest these
 > possibilities, a set of coordinated activities is required that will
 > improve three key ingredients of neuroscientific research: data
-> access, data storage, and data analysis [...] ([Herz et al., 2008](http://www.g-node.org/publications/NN2436.pdf))
+> access, data storage, and data analysis (...) ([Herz et al., 2008](http://www.g-node.org/publications/NN2436.pdf))
 
 The G-Node MATLAB Toolbox (GMT) allows convenient access to electro-physiological
 recordings stored in the G-Node [Data Store](http://portal.g-node.org/data) through
@@ -14,10 +14,15 @@ the MATLAB command line. Requirements are
 * MATLAB R2008b or higher on any platform supporting Java (Linux, Mac, Windows), as well as a
 * G-Node account (available [here](http://portal.g-node.org/data)).
 
+In addition, a backend for persistent and lab-wide caching is recommended but
+not necessary (e.g., MongoDB).
+
 ## Installation
 
-GMT is installed like any other MATLAB toolbox. In order to get the latest stable
-release (0.41b), follow these steps:
+Installation of GMT is similar to that of most MATLAB
+toolboxes. Simply download the newest release and drop it into your
+toolbox folder. In order to get the latest stable release (0.41b),
+follow these steps:
 
 1. [Download one of the provided archives from GitHub.](http://github.com/G-Node/gnode-client-matlab/downloads)
 2. Unzip/untar the release to your MATLAB toolbox directory. In most cases, this
@@ -46,7 +51,7 @@ release channel updates may break compatibility or introduce bugs.
 
 ## Getting started
 
-Before using the toolbox, you need to set up MATLAB and initialize a session.
+Before using the toolbox, you should set up your MATLAB environment and initialize a session.
 
 ```matlab
 % Move all toolbox functions to local namespace
@@ -60,8 +65,14 @@ set_up_classpath();
 session = init('default');
 ```
 
-Now, the toolbox is ready for use. A network connection to the G-Node
-server is required for all download or upload operations.
+Now the toolbox is ready for use. The toolbox requires a network connection for all
+operations involving download or upload. The G-Node data store uses a simple
+object model similar to [NEO](http://packages.python.org/neo/). All your data
+is stored in a set of object types tailored to electrophysiology, such as blocks,
+segments, recording channels, signals et cetera.
+
+In the MATLAB environment, we represent these objects as structures. Here is a
+basic example for creating and uploading such an object.
 
 ```matlab
 % Create a structure containing signal data
@@ -77,4 +88,23 @@ signal.signal = struct('units', 'mV', 'data', my_data);
 % the G-Node data store
 
 new_object = create(session, signal);
+```
+
+Subsequent object retrieval is equally straightforward and supports
+various access methods (e.g., single ID, array of IDs, numeric
+range). Here are a few examples to get you going:
+
+```matlab
+% Lists of objects
+my_list = get_list(g, 'analogsignal');
+
+% Single objects
+my_recording = get(session, 'analogsignal_947');
+
+% Multiple objects
+all = { 'analogsignal_948', 'segment_43', 'unit_8' };
+my_recordings = get(session, all);
+
+% Ranges
+more_recordings = get_range(session, 'analogsignal', 947, 1002);
 ```
