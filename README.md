@@ -21,7 +21,7 @@ not necessary (e.g., MongoDB).
 
 Installation of GMT is similar to that of most MATLAB
 toolboxes. Simply download the newest release and drop it into your
-toolbox folder. In order to get the latest stable release (0.41b),
+toolbox folder. In order to get the latest stable version (0.41b),
 follow these steps:
 
 1. [Download one of the provided archives from GitHub.](http://github.com/G-Node/gnode-client-matlab/downloads)
@@ -54,10 +54,10 @@ release channel updates may break compatibility or introduce bugs.
 Before using the toolbox, you should set up your MATLAB environment and initialize a session.
 
 ```matlab
-% Move all toolbox functions to local namespace
+% Move all toolbox functions into scope
 import gnode.*;
 
-% Preliminaries
+% Prepare MATLAB
 set_up_classpath();
 
 % Initialize session. 'default' will use the account settings specified
@@ -65,7 +65,7 @@ set_up_classpath();
 session = init('default');
 ```
 
-Now the toolbox is ready for use. The toolbox requires a network connection for all
+Now the toolbox is ready for use. It requires a network connection for all
 operations involving download or upload. The G-Node data store uses a simple
 object model similar to [NEO](http://packages.python.org/neo/). All your data
 is stored in a set of object types tailored to electrophysiology, such as blocks,
@@ -108,3 +108,25 @@ my_recordings = get(session, all);
 % Ranges
 more_recordings = get_range(session, 'analogsignal', 947, 1002);
 ```
+
+More advanced operations (e.g., updates, download queues, batch object
+creation and upload, and so on) are described in the [GMT wiki](https://github.com/g-node/gnode-client-matlab/wiki).
+
+## FAQ
+
+**Q:** Is the G-Node toolbox compatible with older versions of MATLAB (i.e., before R2008b)?
+**A:** Unfortunately not. GMT makes heavy use of the JVM bridge provided by Mathworks. This
+       bridge is under constant development. Various
+       incompatibilities and lack of features make it unfeasible to support MATLAB versions
+       beyond R2008b.
+
+**Q:** Is there any versioning support for my data (e.g., revert after destructive edit)?
+**A:** Not yet.
+
+**Q:** Can I contribute?
+**A:** GMT is open-source; pull requests are always welcome. As a user, please report
+       any bugs or missing features on the Issue Tracker.
+
+## License
+
+GMT is MIT-licensed (see LICENSE).
