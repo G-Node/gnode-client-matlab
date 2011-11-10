@@ -61,7 +61,13 @@ function session = init(filename, password, server)
   elseif (nargin == 3)
 
     default_settings = get_default();
-    settings = ConfigurationReader.create(filename, password, server, default_settings.port, default_settings.path, default_settings.apiDefinition, default_settings.caching, default_settings.db);
+    settings = ConfigurationReader.create(filename, password, \
+					  server, \
+					  default_settings.port, \
+					  default_settings.path, \
+					  default_settings.apiDefinition, \
+					  default_settings.caching, \
+					  default_settings.db);
 
   else
 
