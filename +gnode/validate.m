@@ -55,10 +55,12 @@ function res = validate(session, obj, object_type, strict)
   fields = fieldnames(obj);
   
   for i = 1:size(required, 1)
+      
     if (~any(ismember(fields, required{i})))
       res = false;
       fprintf('[GNODE] %s: Required field absent (%s)\n', id, required{i});
     end
+
   end
 
   if (res)
