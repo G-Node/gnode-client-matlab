@@ -1,49 +1,49 @@
 function dummy = make_dummy(session, object_type, minimal)
-  %MAKE_DUMMY Returns a "readymade" structure for creating new
-  %objects with all available (valid) fields added but left blank.
-  %Key purpose is rapid creation of G-Node data store objects by
-  %MATLAB users.
-  %
-  %  dummy = make_dummy(g, 'analogsignal') returns a structure
-  %  containing empty fields for all signal-related properties
-  %  that are required by the G-Node validator.
+%MAKE_DUMMY Returns a "readymade" structure for creating new
+%objects with all available (valid) fields added but left blank.
+%Key purpose is rapid creation of G-Node data store objects by
+%MATLAB users.
+%
+%  dummy = make_dummy(g, 'analogsignal') returns a structure
+%  containing empty fields for all signal-related properties
+%  that are required by the G-Node validator.
 
-  import gnode.*;
+import gnode.*;
 
-  if (nargin < 3)
+if (nargin < 3)
     minimal = false;
-  elseif (nargin < 2)
+elseif (nargin < 2)
     error('[GNODE] Too few arguments');
-  end
+end
 
-  try
+try
     data_fields = cell(session.connector.validator.getData(object_type));
     attr_fields = cell(session.connector.validator.getAttributes(object_type));
     child_fields = cell(session.connector.validator.getChildren(object_type));
     parent_fields = cell(session.connector.validator.getParents(object_type));
-  catch
+catch
     error('[GNODE] Requested type not found in API spec');
-  end
+end
 
-  prep_dummy = struct();
+prep_dummy = struct();
 
-  for i = 1:size(data_fields, 1)
+for i = 1:size(data_fields, 1)
     prep_dummy = setfield(prep_dummy, data_fields{i}, struct('units', '', 'data', 0));
-  end
+end
 
-  for i = 1:size(attr_fields, 1)
+for i = 1:size(attr_fields, 1)
     prep_dummy = setfield(prep_dummy, attr_fields{i}, '');
-  end
+end
 
-  for i = 1:size(child_fields, 1)
+for i = 1:size(child_fields, 1)
     prep_dummy = setfield(prep_dummy, child_fields{i}, {});
-  end
+end
 
-  for i = 1:size(parent_fields, 1)
+for i = 1:size(parent_fields, 1)
     prep_dummy = setfield(prep_dummy, parent_fields{i}, {});
-  end
+end
 
-  dummy = prep_dummy;
+dummy = prep_dummy;
 
 end
 
