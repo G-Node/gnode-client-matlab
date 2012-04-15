@@ -1,4 +1,4 @@
-function visualize(objects)
+function h = visualize(objects)
 %VISUALIZE Convenience function. Wraps plotting for single or multiple
 %  analogsignals.
 
@@ -19,7 +19,7 @@ if numel(objects) < 1
 end
 
 % Plot
-figure;
+h = figure;
 
 % Use first signal as reference
 r_obj = objects{1};
