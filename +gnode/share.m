@@ -3,7 +3,7 @@ function share(session, objects, user, level, cascade)
 %% Defaults
 
 if nargin < 5
-    cascade = 1;
+    cascade = 0;
 end
 
 if nargin < 4
@@ -35,7 +35,8 @@ end
 % Cell array of objects
 if iscell(objects) && ~iscellstr(objects)
     try
-        objects = cellfun(@(x) x.id, objects);
+        objects = cellfun(@(x) x.id, objects, ...
+            'UniformOutput', 0);
     catch
         error(err_msg);
     end
@@ -48,8 +49,8 @@ end
 
 %% Share
 
-for obj = objects
-    if ~session.connector.shareObject(obj, user, level, cascade);
+for o = 1:length(objects)
+    if ~session.connector.shareObject(objects{o}, user, level, cascade);
         error('[GNODE] Could not share object %s', obj);
     end
 end
