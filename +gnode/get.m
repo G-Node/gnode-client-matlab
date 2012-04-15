@@ -1,47 +1,57 @@
-function result = get(session, request)
-  %GET Retrieves a single or multiple G-Node data store objects from
-  %the remote container. If possible (i.e., for objects not recently
-  %modified), a cached representation is returned. For several
-  %objects, use cell arrays of IDs. Return order is not guaranteed.
-  %
-  %  remote_object = get(g, 'analogsignal_947') returns a structure
-  %  corresponding to form and content of the indicated data object.
-  %
-  %  remote_objects = get(g, {'analogsignal_47', 'block_5'}) returns
-  %  an array of objects corresponding to form and content of the
-  %  indicated data objects.
-  
-  % Pull auxiliary functions into scope
-  import gnode.*;
+function my_objects = get(session, request)
+%GET Retrieves a single or multiple G-Node data store objects from
+%the remote container. If possible (i.e., for objects not recently
+%modified), a cached representation is returned. For several
+%objects, use cell arrays of IDs. Return order is not guaranteed.
+%
+%  remote_object = get(g, 'analogsignal_947') returns a structure
+%  corresponding to form and content of the indicated data object.
+%
+%  remote_objects = get(g, {'analogsignal_47', 'block_5'}) returns
+%  an array of objects corresponding to form and content of the
+%  indicated data objects.
 
-  % Sanity check
-  if (nargin < 2)
+% Pull auxiliary functions into scope
+
+import gnode.*;
+
+% Sanity check
+if (nargin < 2)
     error('[GNODE] Insufficient parameters');
-  end
+end
 
-  % Container for return objects
-  my_objects = {};
-  
-  if (~iscellstr(request)) % Single request
-     
-    obj = session.connector.retrieve(request);
+% Container for return objects
+my_objects = {};
+
+try
     
-    if (~is_none(obj)) % Scala-specific check of Some-typed result
-      my_objects = serialize(obj.get);
+    if (~iscellstr(request)) % Single request
+
+        obj = session.connector.retrieve(request);
+
+        if (~is_none(obj)) % Scala-specific check of Some-typed result
+            my_objects = serialize(obj.get);
+        else
+            error('[GNODE] Could not retrieve object %s', request);
+        end
+
+    else % Multiple requests
+
+        for k = 1:length(request)
+            obj = session.connector.retrieve(request{k});
+            if (~is_none(obj))
+                my_objects{end+1} = serialize(obj.get);
+            else
+                fprintf(sprintf('[GNODE] Warning: Object %s could not be retrieved', ...
+                    k));
+            end
+        end
+
     end
 
-  else % Multiple requests
-
-    for k = 1:size(request,1)
-      obj = session.connector.retrieve(request{k});
-      if (~is_none(obj))
-	my_objects{k} = serialize(obj.get);
-      end
-    end
-
-  end
-
-  result = my_objects;
+catch
+    
+    error('[GNODE] Error while retrieving objects');
 
 end
 
