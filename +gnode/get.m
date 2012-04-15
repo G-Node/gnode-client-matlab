@@ -42,8 +42,8 @@ try
             if (~is_none(obj))
                 my_objects{end+1} = serialize(obj.get);
             else
-                fprintf(sprintf('[GNODE] Warning: Object %s could not be retrieved', ...
-                    k));
+                fprintf(sprintf('[GNODE] Warning: Object %s could not be retrieved\n', ...
+                    request{k}));
             end
         end
 

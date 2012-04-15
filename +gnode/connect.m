@@ -1,80 +1,80 @@
 function [one two] = connect(session, obj1, obj2, remote)
-  %CONNECT Connects two NEObjects by setting their respective relation
-  %fields to each other's NEO ID. This requires knowledge of a) their
-  %IDs and by extension b) their types. If this information is not
-  %given, the procedure throws an error.
-  %
-  %Modification is never in place; new objects are returned. If 'true'
-  %is passed as the final argument, connect() performs the intended
-  %change remotely. This helper checks if the given objects *can* be
-  %connected according to G-Node data object semantics of current
-  %session.
-  %
-  %  [obj1 obj2] = connect(g, block, segment) connects a block and a
-  %  segment without deploying the change on the server.
-  %
-  %  [obj1 obj2] = connect(g, block, segment, true) performs the same
-  %  change as above, and immediately adds the connection remotely.
-	 
-  import gnode.*;
-  import org.gnode.lib.matlab.Helper;
+%CONNECT Connects two NEObjects by setting their respective relation
+%fields to each other's NEO ID. This requires knowledge of a) their
+%IDs and by extension b) their types. If this information is not
+%given, the procedure throws an error.
+%
+%Modification is never in place; new objects are returned. If 'true'
+%is passed as the final argument, connect() performs the intended
+%change remotely. This helper checks if the given objects *can* be
+%connected according to G-Node data object semantics of current
+%session.
+%
+%  [obj1 obj2] = connect(g, block, segment) connects a block and a
+%  segment without deploying the change on the server.
+%
+%  [obj1 obj2] = connect(g, block, segment, true) performs the same
+%  change as above, and immediately adds the connection remotely.
 
-  if (nargin < 3)
-    error('[GNODE] Insufficient number of arguments');
-  end
+import gnode.*;
+import org.gnode.lib.matlab.Helper;
 
-  if (nargin < 4)
-    remote = false;
-  end
+if (nargin < 3)
+error('[GNODE] Insufficient number of arguments');
+end
 
-  % Derive types from IDs or error out
+if (nargin < 4)
+remote = false;
+end
 
-  if (~isfield(obj1, 'neo_id') || ~isfield(obj2, 'neo_id'))
-    error('[GNODE] neo_id is required. Please add if known and retry');
-  end
+% Derive types from IDs or error out
 
-  try
-    type1 = Helper.guessType(obj1.neo_id);
-    type2 = Helper.guessType(obj2.neo_id);
-  catch
-    error('[GNODE] Could not derive object type. Please provide a well-formed neo_id for both arguments');
-  end
+if (~isfield(obj1, 'neo_id') || ~isfield(obj2, 'neo_id'))
+error('[GNODE] neo_id is required. Please add if known and retry');
+end
 
-  % Determine if connectable
+try
+type1 = Helper.guessType(obj1.neo_id);
+type2 = Helper.guessType(obj2.neo_id);
+catch
+error('[GNODE] Could not derive object type. Please provide a well-formed neo_id for both arguments');
+end
 
-  parents1 = cell(session.connector.validator.getParents(type1));
-  parents2 = cell(session.connector.validator.getParents(type2));
+% Determine if connectable
 
-  children1 = cell(session.connector.validator.getChildren(type1));
-  children2 = cell(session.connector.validator.getChildren(type2));
+parents1 = cell(session.connector.validator.getParents(type1));
+parents2 = cell(session.connector.validator.getParents(type2));
 
-  type1 = char(type1);
-  type2 = char(type2);
+children1 = cell(session.connector.validator.getChildren(type1));
+children2 = cell(session.connector.validator.getChildren(type2));
 
-  if (~((any(ismember(parents2, type1)) && any(ismember(children1, type2))) || (any(ismember(parents1, type2)) && any(ismember(children2, type1)))))
-    error('[GNODE] Objects cannot be connected!');
-  end
+type1 = char(type1);
+type2 = char(type2);
 
-  % Do the connect
-  new_field1 = getfield(obj1, type2);
-  new_field1{end + 1} = obj2.neo_id;
-  
-  new_obj1 = setfield(obj1, type2, new_field1);
+if (~((any(ismember(parents2, type1)) && any(ismember(children1, type2))) || (any(ismember(parents1, type2)) && any(ismember(children2, type1)))))
+error('[GNODE] Objects cannot be connected!');
+end
 
-  new_field2 = getfield(obj2, type1);
-  new_field2{end + 1} = obj1.neo_id;
+% Do the connect
+new_field1 = getfield(obj1, type2);
+new_field1{end + 1} = obj2.neo_id;
 
-  new_obj2 = setfield(obj2, type1, new_field2);
+new_obj1 = setfield(obj1, type2, new_field1);
 
-  % If requested, save this change to remote
-  if (remote)
-    update(session, new_obj1);
-    update(session, new_obj2);
-  end
+new_field2 = getfield(obj2, type1);
+new_field2{end + 1} = obj1.neo_id;
 
-  % Return new objects
-  one = new_obj1;
-  two = new_obj2;
+new_obj2 = setfield(obj2, type1, new_field2);
+
+% If requested, save this change to remote
+if (remote)
+update(session, new_obj1);
+update(session, new_obj2);
+end
+
+% Return new objects
+one = new_obj1;
+two = new_obj2;
 
 end
 
