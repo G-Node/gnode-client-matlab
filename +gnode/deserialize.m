@@ -19,6 +19,10 @@ for j = 1:size(names, 1)
     if isempty(value)
         continue
     end
+    
+    if numel(strfind(char(name), '_set')) > 0
+        continue
+    end
 
     if (~isstruct(value))
         if (~iscell(value))
