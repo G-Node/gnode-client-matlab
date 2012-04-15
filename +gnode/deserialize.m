@@ -1,44 +1,49 @@
 function neo_obj = deserialize(s)
-  %DESERIALIZE Internal function that builds NEObject from appropriate
-  %structure. Does not perform validation; only safe for pre-
-  %validated MATLAB structs.
-  %
-  %  neo_object = deserialize(str) returns a Java object corresponding
-  %  to contents of passed structure.
+%DESERIALIZE Internal function that builds NEObject from appropriate
+%structure. Does not perform validation; only safe for pre-
+%validated MATLAB structs.
+%
+%  neo_object = deserialize(str) returns a Java object corresponding
+%  to contents of passed structure.
 
-  import org.gnode.lib.neo.*;
-  b = NEOBuilder;
+import org.gnode.lib.neo.*;
 
-  names = fieldnames(s);
-  for i = 1:size(names, 1)
+b = NEOBuilder;
+names = fieldnames(s);
 
-    name = names(i);
+for j = 1:size(names, 1)
+
+    name = names(j);
     value = getfield(s, char(name));
     
-    if (~isstruct(value))
-      if (~iscell(value))
-	b.add(name, value);
-      elseif (size(value, 1) > 1)
-	% Make Java array
-	arr = javaArray('java.lang.String', size(value, 1));
-	for i = 1:size(value,1)
-	    arr(i) = java.lang.String(value(i));
-	end
-	b.add(name, arr);
-      elseif (size(value, 1) == 1)
-	b.add(name, value{1});
-      end
-    else
-      if (size(value.data, 1) < 2)
-	b.add(name, NEODataSingle(value.units, value.data(1)));
-      else
-	b.add(name, NEODataMulti(value.units, value.data));
-      end
+    if isempty(value)
+        continue
     end
-    
-  end
 
-  neo_obj = b.build;
+    if (~isstruct(value))
+        if (~iscell(value))
+            b.add(name, value);
+        elseif (length(value) > 1)
+            % Make Java array
+            arr = javaArray('java.lang.String', size(value, 1));
+            for k = 1:length(value)
+                arr(k) = java.lang.String(value(k));
+            end
+            b.add(name, arr);
+        elseif (size(value, 1) == 1)
+            b.add(name, value{1});
+        end
+    else
+        if (size(value.data, 1) < 2)
+            b.add(name, NEODataSingle(value.units, value.data(1)));
+        else
+            b.add(name, NEODataMulti(value.units, value.data));
+        end
+    end
+
+end
+
+neo_obj = b.build;
 
 end
 

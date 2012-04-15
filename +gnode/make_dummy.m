@@ -1,4 +1,4 @@
-function dummy = make_dummy(session, object_type, minimal)
+function prep_dummy = make_dummy(session, object_type, minimal)
 %MAKE_DUMMY Returns a "readymade" structure for creating new
 %objects with all available (valid) fields added but left blank.
 %Key purpose is rapid creation of G-Node data store objects by
@@ -43,7 +43,7 @@ for i = 1:size(parent_fields, 1)
     prep_dummy = setfield(prep_dummy, parent_fields{i}, {});
 end
 
-dummy = prep_dummy;
+prep_dummy.obj_type = object_type;
 
 end
 

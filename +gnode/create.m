@@ -1,44 +1,45 @@
 function id = create(session, obj, object_type)
-  %CREATE Creates new object of specified object type on remote G-Node
-  %data store. Attempts to guess object type where possible; explicit
-  %argument is, however, preferred. New object needs to pass both
-  %client- and server-side validation. Returns generated ID for new
-  %object upon success.
-  %
-  %  new_id = create(g, new_obj, 'analogsignal') returns ID of newly
-  %  stored signal, and throws an exception in case of transmission
-  %  problems.
+%CREATE Creates new object of specified object type on remote G-Node
+%data store. Attempts to guess object type where possible; explicit
+%argument is, however, preferred. New object needs to pass both
+%client- and server-side validation. Returns generated ID for new
+%object upon success.
+%
+%  new_id = create(g, new_obj, 'analogsignal') returns ID of newly
+%  stored signal, and throws an exception in case of transmission
+%  problems.
 
-  import gnode.*;
-	 
-  % Check if object type is specified. If not, fall back on
-  % 'obj_type' field. If that can't be found, raise error.
+import gnode.*;
 
-  if (nargin < 3)
+% Check if object type is specified. If not, fall back on
+% 'obj_type' field. If that can't be found, raise error.
+
+if (nargin < 3)
     if (isfield(obj, 'obj_type'))
-      object_type = obj.obj_type;
+        object_type = obj.obj_type;
+        obj = rmfield(obj, 'obj_type');
     else
-      error('[GNODE] Cannot perform create without object type. Please specify');
+        error('[GNODE] Cannot perform create without object type. Please specify');
     end
-  end
+end
 
-  % Validate
+% Validate
 
-  if (~validate(session, obj, object_type))
+if (~validate(session, obj, object_type))
     error('[GNODE] Object did not pass validation. Please adjust');
-  end
+end
 
-  % Serialize from MATLAB struct to NEObject
+% Serialize from MATLAB struct to NEObject
 
-  import gnode.*;
-  try
+import gnode.*;
+try
     neo_object = deserialize(obj);
-  catch
+catch
     error('[GNODE] Problem while serializing object. Please check validity first');
-  end
+end
 
-  ret = session.connector.create(neo_object, object_type);
-  id = cell(ret);
+ret = session.connector.create(neo_object, object_type);
+id = cell(ret);
 
 end
 

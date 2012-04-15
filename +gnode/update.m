@@ -19,7 +19,7 @@ if (nargin < 3)
     if (isfield(obj, 'id'))
         id = obj.id;
     else
-        error('[GNODE] Cannot perform update without neo_id. Please specify');
+        error('[GNODE] Cannot perform update without id. Please specify');
     end
 end
 
