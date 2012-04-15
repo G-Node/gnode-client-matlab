@@ -1,4 +1,4 @@
-function l = get_list(session, object_type, limit, offset)
+function final_list = get_list(session, object_type, limit, offset)
   %GET_LIST Retrieves an exhaustive list of all objects of specified
   %object type that are available in the specified session. A limit
   %may be specified.
@@ -16,10 +16,12 @@ function l = get_list(session, object_type, limit, offset)
   end
 
   try
-      l = char(cell(session.connector.retrieveList(object_type, limit, offset)));
+      l = cell(session.connector.retrieveList(object_type, limit, offset));
   catch
       error('[GNODE] Could not retrieve list!');
   end
+  
+  final_list = cellfun(@(x) char(x), l, 'UniformOutput', 0);
 
 end
 
