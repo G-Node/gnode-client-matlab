@@ -1,48 +1,48 @@
 function u = update(session, obj, id)
-  %UPDATE Deploys changes to G-Node data store objects to the remote
-  %container defined by the session. The object's corresponding neo_id
-  %needs to be specified in some way: either explicitly, or via an
-  %implicit 'neo_id' field on the object. Object is validated before
-  %upload. Function returns ID of successfully stored object.
-  %
-  %  id = update(g, the_object) applies changes to remote.
-  %
-  %  id = update(g, the_object, 'analogsignal_947') applies changes
-  %  for explicitly named object.
+%UPDATE Deploys changes to G-Node data store objects to the remote
+%container defined by the session. The object's corresponding neo_id
+%needs to be specified in some way: either explicitly, or via an
+%implicit 'neo_id' field on the object. Object is validated before
+%upload. Function returns ID of successfully stored object.
+%
+%  id = update(g, the_object) applies changes to remote.
+%
+%  id = update(g, the_object, 'analogsignal_947') applies changes
+%  for explicitly named object.
 
-  import gnode.*;
+import gnode.*;
   
-  % Update only possible with explicitly specified ID, either per
-  % argument or as 'neo_id' field on input structure.
+% Update only possible with explicitly specified ID, either per
+% argument or as 'neo_id' field on input structure.
   
-  if (nargin < 3)
-    if (isfield(obj, 'neo_id'))
-      id = obj.neo_id;
+if (nargin < 3)
+    if (isfield(obj, 'id'))
+        id = obj.id;
     else
-      error('[GNODE] Cannot perform update without neo_id. Please specify');
+        error('[GNODE] Cannot perform update without neo_id. Please specify');
     end
-  end
+end
 
-  % Validate object
+% Validate object
 
-  if (~validate(session, obj))
+if (~validate(session, obj))
     error('[GNODE] Object did not pass validation. Please adjust');
-  end
+end
 
-  % Serialize from MATLAB struct to NEObject
-  
-  import gnode.*;
-  try
+% Serialize from MATLAB struct to NEObject
+
+import gnode.*;
+try
     neo_object = deserialize(obj);
-  catch
+catch
     error('[GNODE] Problem while serializing object. Please check validity first');
-  end
+end
 
-  % Now update object accordingly
+% Now update object accordingly
 
-  ret = session.connector.update(id, neo_object);
-  u = cell(ret);
-  
+ret = session.connector.update(id, neo_object);
+u = cell(ret);
+
 end
 
 % Copyright (C) 2011 by German Neuroinformatics Node (www.g-node.org)

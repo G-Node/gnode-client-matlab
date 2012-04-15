@@ -20,7 +20,7 @@ function new = strip(session, obj, object_type)
     import org.gnode.lib.matlab.Helper;
 
     try
-      id = obj.neo_id;
+      id = obj.id;
       object_type = Helper.guessType(id);
     catch
       error('[GNODE] Object type necessary. Please specify');
