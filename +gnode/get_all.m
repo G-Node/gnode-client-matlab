@@ -1,24 +1,23 @@
 function s = get_all(session)
-  %GET_ALL Retrieves all objects placed in the task queue via add_get(). Order
-  %is not guaranteed.
-  %
-  %  add_get(g, 'analogsignal_947');
-  %  add_get(g, 'analogsignal_948');
-  %
-  %  obj = get_all(g) now returns all queued signals.
+%GET_ALL Retrieves all objects placed in the task queue via add_get(). Order
+%is not guaranteed.
+%
+%  add_get(g, 'analogsignal_947');
+%  add_get(g, 'analogsignal_948');
+%
+%  obj = get_all(g) now returns all queued signals.
 
-  import gnode.*;
+import gnode.*;
 
-  % Empty container for returned objects
-  my_objects = {};
+% Empty container for returned objects
+my_objects = {};
+objects = session.connector.retrieve;
 
-  objects = session.connector.retrieve;
+for i = 1:length(objects)
+    my_objects{i} = serialize(objects(i));
+end
 
-  for i = 1:size(objects,1)
-      my_objects{i} = serialize(objects(i));
-  end
-
-  s = my_objects;
+s = my_objects;
 
 end
 

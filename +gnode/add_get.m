@@ -1,21 +1,21 @@
 function add_get(session, request)
-  %ADD_GET Adds a retrieval job to the task queue. By calling get_all(),
-  %all tasks are performed in one go.
-  %
-  %  add_get(g, 'analogsignal_947');
-  %  add_get(g, 'analogsignal_948');
-  %
-  %  obj = get_all(g) now returns all queued signals.
+%ADD_GET Adds a retrieval job to the task queue. By calling get_all(),
+%all tasks are performed in one go.
+%
+%  add_get(g, 'analogsignal_947');
+%  add_get(g, 'analogsignal_948');
+%
+%  obj = get_all(g) now returns all queued signals.
 
-  import gnode.*;
+import gnode.*;
 
-  if (~iscellstr(request))
-     session.connector.addDown(request);
-  else
-    for k = 1:size(request,1)
-      session.connector.addDown(request{k});
+if (~iscellstr(request))
+    session.connector.addDown(request);
+else
+    for k = 1:length(request)
+        session.connector.addDown(request{k});
     end
-  end
+end
 
 end
 
