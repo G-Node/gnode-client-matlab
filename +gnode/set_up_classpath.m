@@ -6,11 +6,10 @@ function set_up_classpath()
   %  standard values.
 
   % Settings
-  toolbox_name = 'gnode';
   lib_file = 'client.jar';
   
-  lib_path = fullfile(toolboxdir(toolbox_name), 'lib', lib_file);
-
+  lib_path = [fileparts(mfilename('fullpath')) '/../lib/' lib_file];
+  
   % Set classloader path to include library JAR
   javaaddpath(lib_path);
   clear java;
