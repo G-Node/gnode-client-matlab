@@ -136,6 +136,26 @@ cellfun(@(signal) gnode.update(g, signal), red_signals);
 
 gnode.list_metadata(g, signals{3});
 
+%% Add data structure
+
+% A collection of analogsignals seems chaotic. Let's add some structure
+% to the proceedings by establishing a recordingchannel:
+
+rc1 = gnode.make_dummy(g, 'recordingchannel');
+rc1.name = 'Electrode #1';
+rc1 = gnode.get_created(g, rc1);
+
+% Our first 50 signals were recorded with this electrode, so let's add
+% them.
+
+rc1_signals = gnode.get(g, signals(1:50));
+rc1_signals = gnode.assign(rc1_signals, rc1);
+
+cellfun(@(signal) gnode.update(g, signal), rc1_signals);
+
+rc1 = gnode.get(g, rc1.id);
+rc1.analogsignal_set
+
 %% Finish session
 
 % When all's said and done, just shut down the session object. All progress
