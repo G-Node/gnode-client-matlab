@@ -1,10 +1,11 @@
-% Stockholm 2012
-%
-% Demonstration of MATLAB client
+%% STOCKHOLM (APRIL 2012)
+% --------------------
+% G-NODE MATLAB CLIENT
+% DEMO
 
 %% Set-up
 
-% We simply add the toolbox directory to the MATLAB search path,
+% We add the toolbox directory to the MATLAB search path,
 % making all gnode.* functions available at the CLI.
 
 addpath('/path/to/gnode/toolbox/');
@@ -42,6 +43,7 @@ signal_one = gnode.get(g, my_signals{1});
 
 % Data objects are simple structures containing general information,
 % maybe metadata and actual *data*.
+
 signal_one
 signal_one.name
 gnode.list_metadata(g, signal_one);
