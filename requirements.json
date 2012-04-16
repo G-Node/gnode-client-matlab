@@ -1,4 +1,48 @@
 {
+    "properties": {
+	"attributes": [
+	    "name",
+	    "definition",
+	    "section",
+	    "uncertainty",
+	    "mapping",
+	    "dependency",
+	    "safety_level",
+	    "unit",
+	    "comment",
+	    "dtype"
+	],
+	"required": [
+	    "name",
+	    "definition",
+	    "section"
+	]
+    },	
+    "sections": {
+	"attributes": [
+	    "name",
+	    "tree_position",
+	    "odml_type",
+	    "safety_level",
+	    "description"
+	],
+	"required": [
+	    "name",
+	    "description"
+	]
+    }	
+    "values": {
+	"attributes": [
+	    "current_state",
+	    "safety_level",
+	    "data",
+	    "parent_property"
+	],
+	"required": [
+	    "data",
+	    "parent_property"
+	]
+    }
     "spiketrain": {
         "attributes": [], 
         "required": [

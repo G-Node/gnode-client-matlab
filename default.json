@@ -5,13 +5,14 @@
     "required": ["username", "password", "host", "port", "path",
 		 "apiVersion", "caching", "db"],
     
-    "username": "bob2",
+    "username": "bob",
     "password": "pass",
     
     "host": "141.84.42.103",
     "port": 8003,
     "prefix": "",
     "prefixData": "electrophysiology",
+    "prefixMetaData": "metadata",
 
     "apiDefinition": "/home/aleonhardt/stockholm/gnode-client-matlab/requirements.json",
 

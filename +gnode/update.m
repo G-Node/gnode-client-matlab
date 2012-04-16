@@ -29,6 +29,8 @@ if (~validate(session, obj))
     error('[GNODE] Object did not pass validation. Please adjust');
 end
 
+obj = rmfield(obj, 'id');
+
 % Serialize from MATLAB struct to NEObject
 
 import gnode.*;
