@@ -27,7 +27,7 @@ for j = 1:size(names, 1)
     if (~isstruct(value))
         if (~iscell(value))
             b.add(name, value);
-        elseif (length(value) > 1)
+        elseif (length(value) > 1) || strcmp(name, 'metadata')
             % Make Java array
             arr = javaArray('java.lang.String', size(value, 1));
             for k = 1:length(value)
