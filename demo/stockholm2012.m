@@ -12,6 +12,7 @@ addpath('/path/to/gnode/toolbox/');
 % Invoking this function sets the correct classpath for the included
 % JVM components.
 
+clear all;
 gnode.set_up_classpath();
 
 % Now we're ready to create a G-Node session object. It encapsulates
@@ -40,9 +41,10 @@ my_signals
 signal_one = gnode.get(g, my_signals{1});
 
 % Data objects are simple structures containing general information,
-% metadata and actual *data*.
+% maybe metadata and actual *data*.
 signal_one
 signal_one.name
+gnode.list_metadata(g, signal_one);
 signal_one.signal.data
 
 % Let's have a closer look at our signal. gnode.visualize(...) 
@@ -55,3 +57,89 @@ gnode.visualize(signal_one);
 
 close all;
 gnode.visualize(gnode.get(g, my_signals));
+
+%% Create metadata
+
+% As we've seen, our objects are still without any metadata. Time to
+% change that. First, we create a section containing our properties and
+% values:
+
+my_section = gnode.make_dummy(g, 'sections');
+my_section
+
+% It's empty. Let's add stuff.
+
+my_section.name = 'Stimulus conditins';
+my_section.description = 'This section contains all features of our stimuli';
+
+% With one command, we can push our section to the server:
+
+my_section = gnode.get_created(g, my_section);
+my_section
+
+% There's a spelling error in the name. Let's fix that.
+
+my_section.name = 'Stimulus conditions';
+my_section = gnode.get_updated(g, my_section);
+my_section
+
+% All in order... Now for some properties and values.
+
+prop_color = gnode.make_dummy(g, 'properties');
+prop_color.name = 'Stimulus Color';
+prop_color.definition = 'Colour of the moving dot';
+prop_color = gnode.assign(prop_color, my_section);
+prop_color = gnode.get_created(g, prop_color);
+
+prop_vel = gnode.make_dummy(g, 'properties');
+prop_vel.name = 'Stimulus Velocity';
+prop_vel.definition = 'Constant velocity of the moving dot';
+prop_vel = gnode.assign(prop_vel, my_section);
+prop_vel = gnode.get_created(g, prop_vel);
+
+val_red = gnode.make_dummy(g, 'values');
+val_red.data = 'Red';
+
+% Of course, values should belong to properties. Let's connect these:
+
+val_red = gnode.assign(val_red, prop_color);
+val_red = gnode.get_created(g, val_red);
+
+% Same for blue.
+
+val_blue = gnode.make_dummy(g, 'values');
+val_blue.data = 'Blue';
+val_blue = gnode.assign(val_blue, prop_color);
+val_blue = gnode.get_created(g, val_blue);
+
+%% Tagging
+
+% We know that every other analogsignal from #200 was recorded with a
+% red stimulus. So let's add appropriate metadata to appropriate data.
+% First, we need the analogsignals in question.
+
+signals = gnode.get_list(g, 'analogsignal', 100, 200);
+red_signals = gnode.get(g, signals(1:2:length(signals)));
+
+gnode.visualize(red_signals);
+
+% None of these possess any metadata so far.
+
+gnode.list_metadata(g, signals{1});
+
+% Now we can assign and update.
+
+red_signals = gnode.assign_metadata(red_signals, val_red);
+cellfun(@(signal) gnode.update(g, signal), red_signals);
+
+% And it worked:
+
+gnode.list_metadata(g, signals{1});
+
+%% Finish session
+
+% When all's said and done, just shut down the session object. All progress
+% and data is, of course, stored in the cloud. Next time you open
+% your MATLAB prompt, you can continue where you left off.
+
+gnode.shutdown(g);

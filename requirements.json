@@ -24,7 +24,8 @@
 	    "tree_position",
 	    "odml_type",
 	    "safety_level",
-	    "description"
+	    "description",
+	    "parent_section"
 	],
 	"required": [
 	    "name",
