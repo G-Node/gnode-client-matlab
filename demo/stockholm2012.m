@@ -118,7 +118,7 @@ val_blue = gnode.get_created(g, val_blue);
 % red stimulus. So let's add appropriate metadata to appropriate data.
 % First, we need the analogsignals in question.
 
-signals = gnode.get_list(g, 'analogsignal', 100, 200);
+signals = gnode.get_list(g, 'analogsignal', 100, 500);
 red_signals = gnode.get(g, signals(1:2:length(signals)));
 
 gnode.visualize(red_signals);
@@ -136,7 +136,7 @@ cellfun(@(signal) gnode.update(g, signal), red_signals);
 
 gnode.list_metadata(g, signals{3});
 
-%% Add data structure
+%% Add a little structure
 
 % A collection of analogsignals seems chaotic. Let's add some structure
 % to the proceedings by establishing a recordingchannel:
@@ -153,8 +153,38 @@ rc1_signals = gnode.assign(rc1_signals, rc1);
 
 cellfun(@(signal) gnode.update(g, signal), rc1_signals);
 
+% This seems a tad cleaner.
+
+gnode.clear_cache(g);
 rc1 = gnode.get(g, rc1.id);
 rc1.analogsignal_set
+
+%% Search
+
+% What if we want to share all AS in RC1 recorded under red stimulus
+% conditions with our colleague Ray?
+
+rays_data = gnode.get_search(g, 'analogsignal', {rc1 val_red});
+length(rays_data)
+
+% 25 -- as expected... Now let's turn that into a quick plot and attach
+% a segment:
+
+gnode.visualize(gnode.get(g, rays_data));
+
+my_segment = gnode.make_dummy(g, 'segment');
+my_segment.name = 'Data for Ray';
+my_segment = gnode.get_created(g, my_segment);
+
+rays_signals = gnode.assign(gnode.get(g, rays_data), my_segment);
+cellfun(@(signal) gnode.update(g, signal), rays_signals);
+
+%% Sharing
+
+% One simple command, and Ray can access all 25 signals from his
+% environment.
+
+gnode.share(g, my_segment, 'ray', 1, 1);
 
 %% Finish session
 
