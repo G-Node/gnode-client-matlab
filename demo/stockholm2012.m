@@ -134,7 +134,7 @@ cellfun(@(signal) gnode.update(g, signal), red_signals);
 
 % And it worked:
 
-gnode.list_metadata(g, signals{1});
+gnode.list_metadata(g, signals{3});
 
 %% Finish session
 
