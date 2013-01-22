@@ -12,7 +12,7 @@ function add_get(session, request)
   if (~iscellstr(request))
      session.connector.addDown(request);
   else
-    for k = 1:size(request,1)
+    for k = 1:length(request)
       session.connector.addDown(request{k});
     end
   end

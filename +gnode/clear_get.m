@@ -4,7 +4,7 @@ function clear_get(session)
   %  clear_get(g) releases all queued retrieval requests.
 
   if (nargin ~= 1)
-    error('[GNODE] Insufficient parameters');
+    error('[GNODE] Number of parameters does not fit function');
   end
   
   session.connector.clearDown();

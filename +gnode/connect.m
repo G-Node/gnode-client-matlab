@@ -19,12 +19,12 @@ function [one two] = connect(session, obj1, obj2, remote)
   import gnode.*;
   import org.gnode.lib.matlab.Helper;
 
-  if (nargin < 3)
-    error('[GNODE] Insufficient number of arguments');
-  end
-
   if (nargin < 4)
     remote = false;
+  end
+
+  if (nargin < 3)
+    error('[GNODE] Insufficient number of arguments');
   end
 
   % Derive types from IDs or error out
