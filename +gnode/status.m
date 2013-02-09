@@ -1,8 +1,9 @@
-function info = status(session)
+function s = status(session)
 % STATUS reports basic information about the current connection and
 % performs a basic check of connectivity (unless silenced explicitly).
 
 import gnode.*;
+import org.gnode.lib.util.Network;
 
 curr_settings = session.settings;
 
@@ -14,6 +15,12 @@ fprintf("Connected to %s:%d as %s since %s.\n", ...
 	curr_settings.port,
 	curr_settings.username,
 	d);
+
+s = Network.check()
+
+if ~s
+   fprintf("Network appears offline!");
+end
 
 end
 
