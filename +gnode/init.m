@@ -16,6 +16,12 @@ import gnode.*;
 
 import org.gnode.lib.client.*;
 import org.gnode.lib.conf.*;
+import org.gnode.lib.util.Network;
+
+% First, check connection:
+if ~Network.check()
+   error("[GNODE] Network not available; please check internet connection.");
+end
 
 % Settings
 config_file = 'default.json';
