@@ -37,8 +37,10 @@ if (nargin == 1)
 
 elseif (nargin == 3)
 
+    username = filename;
+
     default_settings = get_default(default_config_location);
-    settings = ConfigurationReader.create(filename, password, ...
+    settings = ConfigurationReader.create(username, password, ...
           server, ...
           default_settings.port, ...
           default_settings.path, ...
@@ -60,6 +62,7 @@ end
 
 session.connector = t; % Store transfer manager
 session.settings = settings; % Keep configuration
+session.logontime = {date clock};
 
 end
 
