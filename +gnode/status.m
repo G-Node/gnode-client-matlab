@@ -6,12 +6,14 @@ import gnode.*;
 
 curr_settings = session.settings;
 
-fprintf("Connected to %s:%d as %s since %s on %s.\n", ...
+% Transform date & time:
+d = datestr(session.logontime);
+
+fprintf("Connected to %s:%d as %s since %s.\n", ...
 	curr_settings.host,
 	curr_settings.port,
 	curr_settings.username,
-	session.logontime{1},
-	session.logontime{2});
+	d);
 
 end
 

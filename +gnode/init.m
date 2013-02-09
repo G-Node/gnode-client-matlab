@@ -62,7 +62,7 @@ end
 
 session.connector = t; % Store transfer manager
 session.settings = settings; % Keep configuration
-session.logontime = {date clock};
+session.logontime = clock;
 
 end
 
