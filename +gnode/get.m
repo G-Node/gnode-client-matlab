@@ -1,4 +1,4 @@
-function my_objects = get(session, request)
+function my_objects = get(session, request, download_flag)
 %GET Retrieves a single or multiple G-Node data store objects from
 %the remote container. If possible (i.e., for objects not recently
 %modified), a cached representation is returned. For several
@@ -16,7 +16,11 @@ function my_objects = get(session, request)
 import gnode.*;
 
 % Sanity check
-if (nargin < 2)
+if nargin < 3
+   download_flag = 1;
+end
+
+if nargin < 2
     error('[GNODE] Insufficient parameters');
 end
 
@@ -24,34 +28,66 @@ end
 my_objects = {};
 
 try
-    
-    if (~iscellstr(request)) % Single request
+   
+  if (~iscellstr(request)) % Single request
 
-        obj = session.connector.retrieve(request);
+    obj = session.connector.retrieve(request);
 
-        if (~is_none(obj)) % Scala-specific check of Some-typed result
-            my_objects = serialize(obj.get);
-        else
-            error('[GNODE] Could not retrieve object %s', request);
-        end
-
-    else % Multiple requests
-
-        for k = 1:length(request)
-            obj = session.connector.retrieve(request{k});
-            if (~is_none(obj))
-                my_objects{end+1} = serialize(obj.get);
-            else
-                fprintf(sprintf('[GNODE] Warning: Object %s could not be retrieved\n', ...
-                    request{k}));
-            end
-        end
-
+    if (~is_none(obj)) % Scala-specific check of Some-typed result
+      my_objects = serialize(obj.get);
+    else
+      error('[GNODE] Could not retrieve object %s', request);
     end
 
+  else % Multiple requests
+
+    for k = 1:length(request)
+      obj = session.connector.retrieve(request{k});
+      if (~is_none(obj))
+        my_objects{end+1} = serialize(obj.get);
+      else
+        fprintf(sprintf('[GNODE] Warning: Object %s could not be retrieved\n', ...
+			request{k}));
+      end
+    end
+
+  end
+
 catch
-    
-    error('[GNODE] Error while retrieving objects');
+     
+  error('[GNODE] Error while retrieving objects');
+
+end
+
+if download_flag
+
+   % Let's grab connector:
+   t = session.connector;
+   
+   % Hacky: One code path for single/multiple entities
+   if length(my_objects) == 1, my_objects = {my_objects}; end
+   
+   for k = 1:length(my_objects)
+       
+       o = my_objects{k};
+       if isfield(o, 'signal')
+	  if isfield(o.signal, 'url')
+	     % This means, we should get the data:
+	     try
+		temp_data = char(t.downloadData(o.signal.url));
+		o.signal.data = h5read(temp_data, '/data');
+		my_objects{k} = o;
+	     catch
+		  error('[GNODE] Could not download the associated data. Check network connection.');
+	     end
+	  end
+       end
+
+   end
+
+   if length(my_objects) == 1, my_objects = my_objects{1}; end
+
+end	     
 
 end
 
