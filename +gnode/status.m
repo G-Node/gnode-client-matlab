@@ -1,26 +1,28 @@
 function s = status(session)
-% STATUS reports basic information about the current connection and
-% performs a basic check of connectivity (unless silenced explicitly).
+  % STATUS reports basic information about the current connection and
+  % performs a basic check of connectivity (unless silenced explicitly).
 
-import gnode.*;
-import org.gnode.lib.util.Network;
+  import gnode.*;
+  import org.gnode.lib.util.Network;
 
-curr_settings = session.settings;
+  curr_settings = session.settings;
 
-% Transform date & time:
-d = datestr(session.logontime);
+  % Transform date & time:
+  d = datestr(session.logontime);
 
-fprintf("Connected to %s:%d as %s since %s.\n", ...
-	curr_settings.host,
-	curr_settings.port,
-	curr_settings.username,
-	d);
+  fprintf('Connected to %s:%d as %s since %s.\n', ...
+	  char(curr_settings.host), ...
+	  char(curr_settings.port), ...
+	  char(curr_settings.username), ...
+	  d);
 
-s = Network.check()
+  s = Network.check();
 
-if ~s
-   fprintf("Network appears offline!");
-end
+  if ~s
+    fprintf('Network appears offline!\n');
+  else
+    fprintf('Connection OK!\n');
+  end
 
 end
 

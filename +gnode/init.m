@@ -20,7 +20,7 @@ import org.gnode.lib.util.Network;
 
 % First, check connection:
 if ~Network.check()
-   error("[GNODE] Network not available; please check internet connection.");
+   error('[GNODE] Network not available; please check internet connection.');
 end
 
 % Settings
