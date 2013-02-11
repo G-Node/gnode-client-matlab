@@ -14,7 +14,7 @@
     "prefixData": "electrophysiology",
     "prefixMetaData": "metadata",
 
-    "apiDefinition": "",
+    "apiDefinition": "/opt/gnode-client-matlab/requirements.json",
 
     "caching" : "MEMORY",
     "db": ""

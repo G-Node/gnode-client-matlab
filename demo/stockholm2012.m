@@ -8,7 +8,7 @@
 % We add the toolbox directory to the MATLAB search path,
 % making all gnode.* functions available at the CLI.
 
-addpath('/path/to/gnode/toolbox/');
+addpath('/opt/gnode-client-matlab/');
 
 % Invoking this function sets the correct classpath for the included
 % JVM components.
@@ -136,7 +136,7 @@ cellfun(@(signal) gnode.update(g, signal), red_signals);
 
 % And it worked:
 
-gnode.list_metadata(g, signals{3});
+gnode.list_metadata(g, signals{6});
 
 %% Add a little structure
 
