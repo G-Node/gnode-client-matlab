@@ -75,7 +75,7 @@ if download_flag
 	     % This means, we should get the data:
 	     try
 		temp_data = char(t.downloadData(o.signal.url));
-		o.signal.data = h5read(temp_data, '/data');
+		o.signal.data = hdf5read(temp_data, '/data');
 		my_objects{k} = o;
 	     catch
 		  error('[GNODE] Could not download the associated data. Check network connection.');
