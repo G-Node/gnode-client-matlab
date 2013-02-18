@@ -1,4 +1,4 @@
-function neo_obj = deserialize(s)
+function neo_obj = deserialize(session, s)
 %DESERIALIZE Internal function that builds NEObject from appropriate
 %structure. Does not perform validation; only safe for pre-
 %validated MATLAB structs.
@@ -38,10 +38,20 @@ for j = 1:size(names, 1)
             b.add(name, value{1});
         end
     else
-        if (size(value.data, 1) < 2)
+        if (length(value.data) < 2)
             b.add(name, NEODataSingle(value.units, value.data(1)));
         else
-            b.add(name, NEODataMulti(value.units, value.data));
+            % Create appropriate temporary HDF5 file
+            temporary_file = [tempname '.h5'];
+            hdf5write(temporary_file, '/data', value.data);
+            % Upload HDF5 file
+            try
+                h5_permalink = session.connector.uploadData(temporary_file);
+            catch
+                error('[GNODE] Could not store data on server.');
+            end
+            % Create containing entity
+            b.add(name, NEODataMulti(value.units, h5_permalink));
         end
     end
 

@@ -35,7 +35,7 @@ obj = rmfield(obj, 'id');
 
 import gnode.*;
 try
-    neo_object = deserialize(obj);
+    neo_object = deserialize(session, obj);
 catch
     error('[GNODE] Problem while serializing object. Please check validity first');
 end

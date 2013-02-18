@@ -82,6 +82,18 @@ if download_flag
 	     end
 	  end
        end
+       if isfield(o, 'times')
+	  if isfield(o.times, 'url')
+	     % This means, we should get the data:
+	     try
+		temp_data = char(t.downloadData(o.times.url));
+		o.times.data = hdf5read(temp_data, '/data');
+		my_objects{k} = o;
+	     catch
+		  error('[GNODE] Could not download the associated data. Check network connection.');
+	     end
+	  end
+       end
 
    end
 

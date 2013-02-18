@@ -5,7 +5,7 @@
     "required": ["username", "password", "host", "port", "path",
 		 "apiVersion", "caching", "db"],
     
-    "username": "andrey",
+    "username": "bob",
     "password": "pass",
     
     "host": "141.84.42.103",
@@ -14,7 +14,7 @@
     "prefixData": "neo",
     "prefixMetaData": "metadata",
 
-    "apiDefinition": "",
+    "apiDefinition": "/home/aljoscha/code/gnode/gnode-client-matlab/requirements.json",
 
     "caching" : "MEMORY",
     "db": ""
