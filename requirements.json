@@ -49,8 +49,7 @@
         "required": [
             "t_start", 
             "t_stop", 
-            "times", 
-            "waveforms"
+            "times"
         ], 
         "parents": [
             "segment", 
@@ -114,14 +113,19 @@
     }, 
     "eventarray": {
         "attributes": [], 
-        "required": [], 
+        "required": [
+	    "labels",
+	    "times"
+	], 
         "parents": [
             "segment"
         ], 
         "children": [
-            "event"
         ], 
-        "data_fields": []
+        "data_fields": [
+	    "times",
+	    "labels"
+	]
     }, 
     "analogsignal": {
         "attributes": [
