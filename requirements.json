@@ -1,5 +1,5 @@
 {
-    "properties": {
+    "property": {
 	"attributes": [
 	    "name",
 	    "definition",
@@ -18,7 +18,7 @@
 	    "section"
 	]
     },	
-    "sections": {
+    "section": {
 	"attributes": [
 	    "name",
 	    "tree_position",
@@ -32,7 +32,7 @@
 	    "description"
 	]
     },
-    "values": {
+    "value": {
 	"attributes": [
 	    "current_state",
 	    "safety_level",
@@ -279,7 +279,8 @@
         "attributes": [
             "name", 
             "filedatetime", 
-            "index"
+            "index",
+	    "section"
         ], 
         "required": [
             "name"
