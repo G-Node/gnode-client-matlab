@@ -1,9 +1,14 @@
 function num_id = id(obj)
 
-if ~isstruct(obj), error('[GNODE] Need appropriate object!'); end
-if ~isfield(obj, 'id'), error('[GNODE] Need appropriate object!'); end
+if ischar(obj)
+    id = obj;
+else
+    if ~isstruct(obj), error('[GNODE] Need appropriate object!'); end
+    if ~isfield(obj, 'id'), error('[GNODE] Need appropriate object!'); end
+    id = obj.id;
+end
 
-components = regexp(obj.id, '_', 'split');
+components = regexp(id, '_', 'split');
 num_id = str2num(components{end});
 
 end

@@ -24,12 +24,38 @@ if (nargin < 3)
 end
 
 % Validate object
-% 
-% if (~validate(session, obj))
-%     error('[GNODE] Object did not pass validation. Please adjust');
-% end
+
+obj = strip(session, obj);
+
+if (~validate(session, obj))
+    error('[GNODE] Object did not pass validation. Please adjust');
+end
 
 obj = rmfield(obj, 'id');
+
+% Prelim: Fix IDs
+
+import org.gnode.lib.matlab.*;
+
+try
+    object_type = Helper.guessType(id);
+catch
+    error('[GNODE] Could not guess type. Needs specification');
+end
+
+parents = cell(session.connector.validator.getParents(object_type));
+%children = cell(session.connector.validator.getChildren(object_type));
+
+relations = parents;
+
+for idx = 1:length(relations)
+    name = relations{idx};
+    if isfield(obj, name)
+        rel_name = getfield(obj, name);
+        rel_name = rel_name{1};
+        obj = setfield(obj, name, gnode.id(rel_name));
+    end
+end
 
 % Serialize from MATLAB struct to NEObject
 

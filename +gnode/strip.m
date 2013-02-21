@@ -29,7 +29,7 @@ function new = strip(session, obj, object_type)
   end
 
   legal_fields = cell(session.connector.validator.getAll(object_type));
-  legal_fields{end+1} = 'neo_id'; % Additionally, we keep neo_id
+  legal_fields{end+1} = 'id'; % Additionally, we keep neo_id
   
   fields = fieldnames(obj);
   new_object = struct();
