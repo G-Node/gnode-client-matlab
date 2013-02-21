@@ -16,7 +16,8 @@ function s = status(session)
 	  char(curr_settings.username), ...
 	  d);
 
-  s = Network.check();
+  url = ['http://' char(curr_settings.host) ':' num2str(curr_settings.port) '/'];
+  s = Network.check(url);
 
   if ~s
     fprintf('Network appears offline!\n');

@@ -19,7 +19,7 @@ import org.gnode.lib.conf.*;
 import org.gnode.lib.util.Network;
 
 % First, check connection:
-if ~Network.check()
+if ~Network.check('http://www.google.com')
    error('[GNODE] Network not available; please check internet connection.');
 end
 
