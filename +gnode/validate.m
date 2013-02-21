@@ -60,6 +60,11 @@ for i = 1:size(required, 1)
         res = false;
         fprintf('[GNODE] %s: Required field absent (%s)\n', id, required{i});
     end
+    
+    if isempty(getfield(obj, required{i}))
+        res = false;
+        fprintf('[GNODE] %s: Required field empty (%s)\n', id, required{i});
+    end
 
 end
 
