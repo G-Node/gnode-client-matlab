@@ -1,4 +1,10 @@
 function share(session, objects, user, level, cascade)
+%SHARE Modify an entity's permissions. The required parameters are session,
+%either a single object (or its ID) or a list of objects (or their IDs),
+%the user in question, safety level (1 = public, 2 = group, 3 = private),
+%and whether the modification should apply to all nested objects (cascade).
+%
+%  gnode.share(session, 'analogsignal_1', 'john', '1', 0);
 
 %% Defaults
 
