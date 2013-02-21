@@ -1,352 +1,365 @@
 {
-  "property": {
-    "attributes": [
-      "name",
-      "definition",
-      "section",
-      "uncertainty",
-      "mapping",
-      "dependency",
-      "safety_level",
-      "unit",
-      "comment",
-      "dtype"
-    ],
-    "required": [
-      "name",
-      "definition",
-      "section"
-    ]
-  },
-  "section": {
-    "attributes": [
-      "name",
-      "tree_position",
-      "odml_type",
-      "safety_level",
-      "description",
-      "parent_section"
-    ],
-    "required": [
-      "name",
-      "description"
-    ]
-  },
-  "value": {
-    "attributes": [
-      "current_state",
-      "safety_level",
-      "data",
-      "parent_property"
-    ],
-    "required": [
-      "data",
-      "parent_property"
-    ]
-  },
-  "block": {
-    "attributes": [
-      "name",
-      "filedatetime",
-      "index"
-    ],
-    "required": [
-      "name"
-    ],
-    "parents": [
-      "section"
-    ],
-    "children": [
-      "segment",
-      "recordingchannelgroup"
-    ],
-    "data_fields": [
-      
-    ]
-  },
-  "segment": {
-    "attributes": [
-      "name",
-      "description",
-      "filedatetime",
-      "index"
-    ],
-    "required": [
-      "name"
-    ],
-    "parents": [
-      "block"
-    ],
-    "children": [
-      "analogsignal",
-      "irsaanalogsignal",
-      "analogsignalarray",
-      "spiketrain",
-      "spike",
-      "event",
-      "eventarray",
-      "epoch",
-      "epocharray"
-    ],
-    "data_fields": [
-      
-    ]
-  },
-  "eventarray": {
-    "attributes": [
-      "name",
-      "description"
-    ],
-    "required": [
-      "times"
-    ],
-    "parents": [
-      "segment",
-      "labels"
-    ],
-    "children": [
-      
-    ],
-    "data_fields": [
-      "times"
-    ]
-  },
-  "event": {
-    "attributes": [
-      "name",
-      "description",
-      "label"
-    ],
-    "required": [
-      "label",
-      "time"
-    ],
-    "parents": [
-      "segment"
-    ],
-    "children": [
-      
-    ],
-    "data_fields": [
-      "time"
-    ]
-  },
-  "epocharray": {
-    "attributes": [
-      "name",
-      "description"
-    ],
-    "required": [
-      "times",
-      "durations"
-    ],
-    "parents": [
-      "segment",
-      "labels"
-    ],
-    "children": [
+    "property": {
+	"attributes": [
+	    "name",
+	    "definition",
+	    "section",
+	    "uncertainty",
+	    "mapping",
+	    "dependency",
+	    "safety_level",
+	    "unit",
+	    "comment",
+	    "dtype"
+	],
+	"required": [
+	    "name",
+	    "definition",
+	    "section"
+	]
+    },
+    "section": {
+	"attributes": [
+	    "name",
+	    "tree_position",
+	    "odml_type",
+	    "safety_level",
+	    "description",
+	    "parent_section"
+	],
+	"required": [
+	    "name",
+	    "description"
+	]
+    },
+    "value": {
+	"attributes": [
+	    "safety_level",
+	    "data",
+	    "parent_property"
+	],
+	"required": [
+	    "data",
+	    "parent_property"
+	]
+    },
+    "block": {
+	"attributes": [
+	    "name",
+	    "filedatetime",
+	    "index",
+	    "safety_level"
+	],
+	"required": [
+	    "name"
+	],
+	"parents": [
+	    "section"
+	],
+	"children": [
+	    "segment",
+	    "recordingchannelgroup"
+	],
+	"data_fields": [
+	    
+	]
+    },
+    "segment": {
+	"attributes": [
+	    "name",
+	    "description",
+	    "filedatetime",
+	    "index",
+	    "safety_level"
+	],
+	"required": [
+	    "name"
+	],
+	"parents": [
+	    "block"
+	],
+	"children": [
+	    "analogsignal",
+	    "irsaanalogsignal",
+	    "analogsignalarray",
+	    "spiketrain",
+	    "spike",
+	    "event",
+	    "eventarray",
+	    "epoch",
+	    "epocharray"
+	],
+	"data_fields": [
+	    
+	]
+    },
+    "eventarray": {
+	"attributes": [
+	    "name",
+	    "description",
+	    "safety_level"
+	],
+	"required": [
+	    "times"
+	],
+	"parents": [
+	    "segment",
+	    "labels"
+	],
+	"children": [
+	    
+	],
+	"data_fields": [
+	    "times"
+	]
+    },
+    "event": {
+	"attributes": [
+	    "name",
+	    "description",
+	    "label",
+	    "safety_level"
+	],
+	"required": [
+	    "label",
+	    "time"
+	],
+	"parents": [
+	    "segment"
+	],
+	"children": [
+	    
+	],
+	"data_fields": [
+	    "time"
+	]
+    },
+    "epocharray": {
+	"attributes": [
+	    "name",
+	    "description",
+	    "safety_level"
+	],
+	"required": [
+	    "times",
+	    "durations"
+	],
+	"parents": [
+	    "segment",
+	    "labels"
+	],
+	"children": [
 
-    ],
-    "data_fields": [
-      "times",
-      "durations"
-    ]
-  },
-  "epoch": {
-    "attributes": [
-      "name",
-      "description",
-      "label"
-    ],
-    "required": [
-      "label",
-      "time",
-      "duration"
-    ],
-    "parents": [
-      "segment"
-    ],
-    "children": [
-      
-    ],
-    "data_fields": [
-      "time",
-      "duration"
-    ]
-  },
-  "recordingchannelgroup": {
-    "attributes": [
-      "name",
-      "description"
-    ],
-    "required": [
-      "name"
-    ],
-    "parents": [
-      "block"
-    ],
-    "children": [
-      "recordingchannel",
-      "analogsignalarray"
-    ],
-    "data_fields": [
-      
-    ]
-  },
-  "recordingchannel": {
-    "attributes": [
-      "name",
-      "description",
-      "index"
-    ],
-    "required": [
-      "name"
-    ],
-    "parents": [
-      "recordingchannelgroup"
-    ],
-    "children": [
-      "unit",
-      "analogsignal",
-      "irsaanalogsignal"
-    ],
-    "data_fields": [
-      
-    ]
-  },
-  "unit": {
-    "attributes": [
-      "name",
-      "description"
-    ],
-    "required": [
-      "name"
-    ],
-    "parents": [
-      "recordingchannel"
-    ],
-    "children": [
-      "spiketrain",
-      "spike"
-    ],
-    "data_fields": [
-      
-    ]
-  },
-  "spiketrain": {
-    "attributes": [
-      "name",
-      "description"
-    ],
-    "required": [
-      "t_start",
-      "t_stop",
-      "times"
-    ],
-    "parents": [
-      "segment",
-      "unit"
-    ],
-    "children": [
-      
-    ],
-    "data_fields": [
-      "t_start",
-      "t_stop",
-      "times",
-      "waveforms"
-    ]
-  },
-  "analogsignalarray": {
-    "attributes": [
-      "name",
-      "description"
-    ],
-    "required": [
-      "sampling_rate",
-      "t_start",
-      "signal"
-    ],
-    "parents": [
-      "segment",
-      "recordingchannelgroup"
-    ],
-    "children": [
+	],
+	"data_fields": [
+	    "times",
+	    "durations"
+	]
+    },
+    "epoch": {
+	"attributes": [
+	    "name",
+	    "description",
+	    "label",
+	    "safety_level"
+	],
+	"required": [
+	    "label",
+	    "time",
+	    "duration"
+	],
+	"parents": [
+	    "segment"
+	],
+	"children": [
+	    
+	],
+	"data_fields": [
+	    "time",
+	    "duration"
+	]
+    },
+    "recordingchannelgroup": {
+	"attributes": [
+	    "name",
+	    "description",
+	    "safety_level"
+	],
+	"required": [
+	    "name"
+	],
+	"parents": [
+	    "block"
+	],
+	"children": [
+	    "recordingchannel",
+	    "analogsignalarray"
+	],
+	"data_fields": [
+	    
+	]
+    },
+    "recordingchannel": {
+	"attributes": [
+	    "name",
+	    "description",
+	    "index",
+	    "safety_level"
+	],
+	"required": [
+	    "name"
+	],
+	"parents": [
+	    "recordingchannelgroup"
+	],
+	"children": [
+	    "unit",
+	    "analogsignal",
+	    "irsaanalogsignal"
+	],
+	"data_fields": [
+	    
+	]
+    },
+    "unit": {
+	"attributes": [
+	    "name",
+	    "description",
+	    "safety_level"
+	],
+	"required": [
+	    "name"
+	],
+	"parents": [
+	    "recordingchannel"
+	],
+	"children": [
+	    "spiketrain",
+	    "spike"
+	],
+	"data_fields": [
+	    
+	]
+    },
+    "spiketrain": {
+	"attributes": [
+	    "name",
+	    "description",
+	    "safety_level"
+	],
+	"required": [
+	    "t_start",
+	    "t_stop",
+	    "times"
+	],
+	"parents": [
+	    "segment",
+	    "unit"
+	],
+	"children": [
+	    
+	],
+	"data_fields": [
+	    "t_start",
+	    "t_stop",
+	    "times",
+	    "waveforms"
+	]
+    },
+    "analogsignalarray": {
+	"attributes": [
+	    "name",
+	    "description",
+	    "safety_level"
+	],
+	"required": [
+	    "sampling_rate",
+	    "t_start",
+	    "signal"
+	],
+	"parents": [
+	    "segment",
+	    "recordingchannelgroup"
+	],
+	"children": [
 
-    ],
-    "data_fields": [
-      "sampling_rate",
-      "t_start",
-      "signal"
-    ]
-  },
-  "analogsignal": {
-    "attributes": [
-      "name",
-      "description"
-    ],
-    "required": [
-      "sampling_rate",
-      "t_start",
-      "signal"
-    ],
-    "parents": [
-      "segment",
-      "analogsignalarray",
-      "recordingchannel"
-    ],
-    "children": [
-      
-    ],
-    "data_fields": [
-      "sampling_rate",
-      "t_start",
-      "signal"
-    ]
-  },
-  "irsaanalogsignal": {
-    "attributes": [
-      "name",
-      "description"
-    ],
-    "required": [
-      "t_start",
-      "signal",
-      "times"
-    ],
-    "parents": [
-      "segment",
-      "recordingchannel"
-    ],
-    "children": [
-      
-    ],
-    "data_fields": [
-      "t_start",
-      "signal",
-      "times"
-    ]
-  },
-  "spike": {
-    "attributes": [
-      "name",
-      "description"
-    ],
-    "required": [
-      "time"
-    ],
-    "parents": [
-      "segment",
-      "unit"
-    ],
-    "children": [
-      
-    ],
-    "data_fields": [
-      "left_sweep",
-      "time",
-      "sampling_rate",
-      "waveform"
-    ]
-  }
+	],
+	"data_fields": [
+	    "sampling_rate",
+	    "t_start",
+	    "signal"
+	]
+    },
+    "analogsignal": {
+	"attributes": [
+	    "name",
+	    "description",
+	    "safety_level"
+	],
+	"required": [
+	    "sampling_rate",
+	    "t_start",
+	    "signal"
+	],
+	"parents": [
+	    "segment",
+	    "analogsignalarray",
+	    "recordingchannel"
+	],
+	"children": [
+	    
+	],
+	"data_fields": [
+	    "sampling_rate",
+	    "t_start",
+	    "signal"
+	]
+    },
+    "irsaanalogsignal": {
+	"attributes": [
+	    "name",
+	    "description",
+	    "safety_level"
+	],
+	"required": [
+	    "t_start",
+	    "signal",
+	    "times"
+	],
+	"parents": [
+	    "segment",
+	    "recordingchannel"
+	],
+	"children": [
+	    
+	],
+	"data_fields": [
+	    "t_start",
+	    "signal",
+	    "times"
+	]
+    },
+    "spike": {
+	"attributes": [
+	    "name",
+	    "description",
+	    "safety_level"
+	],
+	"required": [
+	    "time"
+	],
+	"parents": [
+	    "segment",
+	    "unit"
+	],
+	"children": [
+	    
+	],
+	"data_fields": [
+	    "left_sweep",
+	    "time",
+	    "sampling_rate",
+	    "waveform"
+	]
+    }
 }
