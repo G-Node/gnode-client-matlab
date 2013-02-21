@@ -28,7 +28,7 @@ function st = serialize(obj)
 
     data_object = obj.data.get(data_keys(k)).get;
     
-    if isempty(data_object.getURL)
+    if data_object.getURL.isEmpty
       data_struct = struct('units', char(data_object.getUnits), 'data', data_object.getData);
     else
       data_struct = struct('units', char(data_object.getUnits), 'url', char(data_object.getURL));
