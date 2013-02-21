@@ -48,7 +48,8 @@
 	    "name",
 	    "filedatetime",
 	    "index",
-	    "safety_level"
+	    "safety_level",
+	    "description"
 	],
 	"required": [
 	    "name"
