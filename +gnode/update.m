@@ -24,10 +24,10 @@ if (nargin < 3)
 end
 
 % Validate object
-
-if (~validate(session, obj))
-    error('[GNODE] Object did not pass validation. Please adjust');
-end
+% 
+% if (~validate(session, obj))
+%     error('[GNODE] Object did not pass validation. Please adjust');
+% end
 
 obj = rmfield(obj, 'id');
 
