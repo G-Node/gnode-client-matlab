@@ -1,4 +1,12 @@
 function d = new_object(varargin)
+%NEW_OBJECT Allows the creation of objects in one call. Please provide
+%session, type of object, and all object attributes as key-value pairs.
+%
+%  s = new_object(session, 'segment', 'name', 'A segment');
+%  as = new_object(session, 'analogsignal', 'name', 'A signal', ...
+%                  't_start', struct('units', 'ms', 'data', 0), ...
+%                  'sampling_rate', struct('units', 'Hz', 'data', 1), ...
+%                  'signal', struct('units', 'mV', 'data', [1 2 3]);
 
 import gnode.*;
 
