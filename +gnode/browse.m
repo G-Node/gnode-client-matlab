@@ -1,18 +1,27 @@
-function final_list = browse(session, object_type, limit, offset)
-%GET_LIST Retrieves an exhaustive list of all objects of specified
+function final_list = browse(session, object_type, display, limit, offset)
+%BROWSE Retrieves and displays a list of all objects of specified
 %object type that are available in the specified session. A limit
-%may be specified.
+%may be determined. In addition to IDs, names and descriptions are shown.
 %
-%  list = get_list(g, 'analogsignal', 100, 0) returns a list of all
-%  available signals limited to 100 entries and with an offset of
-%  zero (that is, starting at first signal).
+%  list = browse(g, 'analogsignal', 1) returns and displays a list of all
+%  available signals. The final parameter activates showing available
+%  objects in the command window. In addition, limit and offset may be
+%  supplied (see get_list).
 
-if (nargin < 4)
+if nargin < 5
     offset = 0;
 end
 
-if (nargin < 3)
+if nargin < 4
     limit = 100;
+end
+
+if nargin < 3
+    display = 1;
+end
+
+if nargin < 2
+    error('[GNODE] Please supply session and object type!');
 end
 
 try
@@ -24,12 +33,14 @@ end
 s = size(l);
 final_list = reshape(cellfun(@(x) char(x), l(:), 'UniformOutput', 0), s);
 
-fprintf('Available objects for %s:\n\n', object_type);
-
-for idx = 1:length(final_list)
-    obj = final_list(idx,:);
-    fprintf('Object ID: %s\n\tName: %s\n\tDescription: %s\n\n', ...
-        char(obj(1)), char(obj(2)), char(obj(3)));
+if display
+    fprintf('Available objects for %s:\n\n', object_type);
+    
+    for idx = 1:size(final_list, 1)
+        obj = final_list(idx,:);
+        fprintf('Object ID: %s\n\tName: %s\n\tDescription: %s\n\n', ...
+            char(obj(1)), char(obj(2)), char(obj(3)));
+    end
 end
 
 end
