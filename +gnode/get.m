@@ -15,6 +15,8 @@ function my_objects = get(session, request, download_flag)
 
 import gnode.*;
 
+% fprintf('Getting %s\n', request);
+
 % Sanity check
 if nargin < 3
     download_flag = 1;
