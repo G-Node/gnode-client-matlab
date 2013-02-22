@@ -1,4 +1,4 @@
-function cascade_entity = get_cascade(session, id)
+function cascade_entity = get_cascade(session, id, silent)
 %GET_CASCADE Retrieves a top-level G-Node data store object and
 %all its nested dependencies. That is, for an arbitrary object
 %block_25, all connected objects (e.g., segments, signals, and so
@@ -13,6 +13,10 @@ function cascade_entity = get_cascade(session, id)
 %  structure containing all sub-objects of block_25.
 
 import gnode.*;
+
+if nargin < 3
+    silent = 0;
+end
 
 % Retrieve children of object recursively, and store
 % under respective category.
@@ -40,7 +44,9 @@ try
         
         if(isfield(top_level, category))
             
-            % fprintf('Checking %s\n', category);
+            if ~silent
+                fprintf('Checking %s\n', category);
+            end
             list = getfield(top_level, category);
             
             collector = struct();
