@@ -30,8 +30,16 @@ default_config_location = [fileparts(mfilename('fullpath')) '/../' config_file];
 % Determine intended configuration source
 if (nargin == 1)
 
-    if (strcmp(filename, 'default'))
+    if strcmp(filename, 'default')
         settings = get_default(default_config_location);
+    elseif strcmp(filename, 'home')
+        if ispc
+            homedir = getenv('USERPROFILE');
+        else
+            homedir = getenv('HOME');
+        end
+        home_path = fullfile(homedir, 'gnode.json');
+        settings = get_default(home_path);
     else
         settings_some = ConfigurationReader.fromFile(filename);
         try
