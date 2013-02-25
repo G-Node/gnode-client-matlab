@@ -14,6 +14,7 @@ function my_objects = get(session, request, download_flag)
 % Pull auxiliary functions into scope
 
 import gnode.*;
+global etag_store;
 
 % fprintf('Getting %s\n', request);
 
@@ -76,11 +77,29 @@ if download_flag
             if isfield(o.signal, 'url')
                 % This means, we should get the data:
                 try
-                    temp_data = char(t.downloadData(o.signal.url));
-                    info = hdf5info(temp_data);
+                    
+                    % Check if available in cache:
+                    if isfield(etag_store, o.id)
+                        etag_object = getfield(etag_store, o.id);
+                        curr_etag = etag_object.etag;
+                        curr_location = etag_object.location;
+                    else
+                        curr_etag = '';
+                        curr_location = '';
+                    end
+                    
+                    temp_data = cell(t.downloadDataCache(o.signal.url, curr_location, curr_etag));
+                    session.x = 'fdsafdsa';
+                    
+                    % Refresh cache:
+                    etag_store = setfield(etag_store, o.id, ...
+                        struct('location', temp_data{1}, 'etag', temp_data{2}));
+                    
+                    info = hdf5info(temp_data{1});
                     data_name = info.GroupHierarchy.Datasets(1).Name;
-                    o.signal.data = hdf5read(temp_data, data_name);
+                    o.signal.data = hdf5read(temp_data{1}, data_name);
                     my_objects{k} = o;
+                    
                 catch
                     error('[GNODE] Could not download the associated data. Check network connection.');
                 end
@@ -90,11 +109,28 @@ if download_flag
             if isfield(o.times, 'url')
                 % This means, we should get the data:
                 try
-                    temp_data = char(t.downloadData(o.times.url));
-                    info = hdf5info(temp_data);
+
+                    % Check if available in cache:
+                    if isfield(etag_store, o.id)
+                        etag_object = getfield(etag_store, o.id);
+                        curr_etag = etag_object.etag;
+                        curr_location = etag_object.location;
+                    else
+                        curr_etag = '';
+                        curr_location = '';
+                    end
+                    
+                    temp_data = char(t.downloadDataCache(o.times.url, curr_location, curr_etag));
+                    
+                    % Refresh cache:
+                    etag_store = setfield(etag_store, o.id, ...
+                        struct('location', temp_data{1}, 'etag', temp_data{2}));
+                    
+                    info = hdf5info(temp_data{1});
                     data_name = info.GroupHierarchy.Datasets(1).Name;
-                    o.times.data = hdf5read(temp_data, data_name);
+                    o.times.data = hdf5read(temp_data{1}, data_name);
                     my_objects{k} = o;
+                    
                 catch
                     error('[GNODE] Could not download the associated data. Check network connection.');
                 end
