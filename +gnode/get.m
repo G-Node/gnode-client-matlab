@@ -119,7 +119,7 @@ if download_flag
                         curr_location = '';
                     end
                     
-                    temp_data = char(t.downloadDataCache(o.times.url, curr_location, curr_etag));
+                    temp_data = cell(t.downloadDataCache(o.times.url, curr_location, curr_etag));
                     
                     % Refresh cache:
                     etag_store = setfield(etag_store, o.id, ...
