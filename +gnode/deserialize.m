@@ -39,7 +39,9 @@ for j = 1:size(names, 1)
         end
     else
         if (length(value.data) < 2)
-            b.add(name, NEODataSingle(value.units, value.data(1)));
+            if ~isempty(value.units)
+                b.add(name, NEODataSingle(value.units, value.data(1)));
+            end
         else
             % Create appropriate temporary HDF5 file
             temporary_file = [tempname '.h5'];
