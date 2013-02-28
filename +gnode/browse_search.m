@@ -10,6 +10,7 @@ function final_list = browse_search(session, object_type, varargin)
 
 offset = 0;
 limit = 500;
+display = 1;
 
 if nargin < 4
     error('[GNODE] Please specify criteria for search');
