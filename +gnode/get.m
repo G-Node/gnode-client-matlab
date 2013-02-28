@@ -89,7 +89,6 @@ if download_flag
                     end
                     
                     temp_data = cell(t.downloadDataCache(o.signal.url, curr_location, curr_etag));
-                    session.x = 'fdsafdsa';
                     
                     % Refresh cache:
                     etag_store = setfield(etag_store, o.id, ...
