@@ -38,11 +38,9 @@ for j = 1:size(names, 1)
             b.add(name, value{1});
         end
     else
-        if (length(value.data) < 2)
-            if ~strcmp(name, 'times') && ~strcmp(name, 'signal')
-                if ~isempty(value.units)
-                    b.add(name, NEODataSingle(value.units, value.data(1)));
-                end
+        if (length(value.data) < 2) && ~strcmp(name, 'times') && ~strcmp(name, 'signal')
+            if ~isempty(value.units)
+                b.add(name, NEODataSingle(value.units, value.data(1)));
             end
         else
             % Create appropriate temporary HDF5 file
@@ -58,7 +56,7 @@ for j = 1:size(names, 1)
             b.add(name, NEODataMulti(value.units, h5_permalink));
         end
     end
-
+    
 end
 
 neo_obj = b.build;
