@@ -1,59 +1,59 @@
 function st = serialize(obj)
-  %SERIALIZE Internal function that builds a structure from a given
-  %Scala NEObject.
-  %
-  %  structure = serialize(scala_neobject) returns a fully
-  %  transformed NEObject.
+%SERIALIZE Internal function that builds a structure from a given
+%Scala NEObject.
+%
+%  structure = serialize(scala_neobject) returns a fully
+%  transformed NEObject.
 
-  str_keys = obj.getStringKeys;
-  num_keys = obj.getNumKeys;
-  data_keys = obj.getDataKeys;
-  rel_keys = obj.getRelKeys;
+str_keys = obj.getStringKeys;
+num_keys = obj.getNumKeys;
+data_keys = obj.getDataKeys;
+rel_keys = obj.getRelKeys;
 
-  struct_builder = struct();
+struct_builder = struct();
 
-  for k = 1:size(str_keys,1)
+for k = 1:size(str_keys,1)
     struct_builder = setfield(struct_builder, char(str_keys(k)), char(obj.stringInfo.get(str_keys(k)).get));
-  end
+end
 
-  for k = 1:size(num_keys,1)
+for k = 1:size(num_keys,1)
     struct_builder = setfield(struct_builder,	char(num_keys(k)), obj.numInfo.get(num_keys(k)).get);
-  end
+end
 
-  for k = 1:size(rel_keys,1)
+for k = 1:size(rel_keys,1)
     struct_builder = setfield(struct_builder,	char(rel_keys(k)), cell(obj.relations.get(rel_keys(k)).get));
-  end
+end
 
-  for k = 1:size(data_keys,1)
-
+for k = 1:size(data_keys,1)
+    
     data_object = obj.data.get(data_keys(k)).get;
     
     if data_object.getURL.isEmpty
-      data_struct = struct('units', char(data_object.getUnits), 'data', data_object.getData);
+        data_struct = struct('units', char(data_object.getUnits), 'data', data_object.getData);
     else
-      data_struct = struct('units', char(data_object.getUnits), 'url', char(data_object.getURL));
+        data_struct = struct('units', char(data_object.getUnits), 'url', char(data_object.getURL));
     end
     
     struct_builder = setfield(struct_builder, char(data_keys(k)), data_struct);
     
-  end
+end
 
-  st = struct_builder;
-  
+st = struct_builder;
+
 end
 
 % Copyright (C) 2011 by German Neuroinformatics Node (www.g-node.org)
-% 
+%
 % Permission is hereby granted, free of charge, to any person obtaining a copy
 % of this software and associated documentation files (the "Software"), to deal
 % in the Software without restriction, including without limitation the rights
 % to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 % copies of the Software, and to permit persons to whom the Software is
 % furnished to do so, subject to the following conditions:
-% 
+%
 % The above copyright notice and this permission notice shall be included in
 % all copies or substantial portions of the Software.
-% 
+%
 % THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 % IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 % FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE

@@ -13,8 +13,8 @@ names = fieldnames(s);
 
 for j = 1:size(names, 1)
 
-    name = names(j);
-    value = getfield(s, char(name));
+    name = char(names(j));
+    value = getfield(s, name);
     
     if isempty(value)
         continue
@@ -39,8 +39,10 @@ for j = 1:size(names, 1)
         end
     else
         if (length(value.data) < 2)
-            if ~isempty(value.units)
-                b.add(name, NEODataSingle(value.units, value.data(1)));
+            if ~strcmp(name, 'times') && ~strcmp(name, 'signal')
+                if ~isempty(value.units)
+                    b.add(name, NEODataSingle(value.units, value.data(1)));
+                end
             end
         else
             % Create appropriate temporary HDF5 file
