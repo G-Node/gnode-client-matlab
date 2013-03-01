@@ -1,46 +1,47 @@
 function new = strip(session, obj, object_type)
-  %STRIP Returns a clean version of a given NEObject based on
-  %contracts specified by present session validator. Only fundamental
-  %object information as specified in the G-Node data storage format
-  %remains. Incidental information such as creation date, ownership
-  %etc. are discarded. Out of non-essential object properties, only
-  %neo_id is preserved for reasons of convenience.
-  %
-  %  stripped_object = strip(g, signal, 'analogsignal') returns a
-  %  clean version of the specified object. Object type is explicitly
-  %  stated.
-  %
-  %  stripped_object = strip(g, signal) returns a clean version whose
-  %  type is guessed based on heuristics. NB, this type guess can fail
-  %  in which case object type needs to be made unambiguous.
+%STRIP Returns a clean version of a given NEObject based on
+%contracts specified by present session validator. Only fundamental
+%object information as specified in the G-Node data storage format
+%remains. Incidental information such as creation date, ownership
+%etc. are discarded. Out of non-essential object properties, only
+%neo_id is preserved for reasons of convenience.
+%
+%  stripped_object = strip(g, signal, 'analogsignal') returns a
+%  clean version of the specified object. Object type is explicitly
+%  stated.
+%
+%  stripped_object = strip(g, signal) returns a clean version whose
+%  type is guessed based on heuristics. NB, this type guess can fail
+%  in which case object type needs to be made unambiguous.
 
-  if (nargin < 3)
-
-    % Attempt to determine type without explicit information 
+if (nargin < 3)
+    
+    % Attempt to determine type without explicit information
     import org.gnode.lib.matlab.Helper;
-
+    
     try
-      id = obj.id;
-      object_type = Helper.guessType(id);
+        id = obj.id;
+        object_type = Helper.guessType(id);
     catch
-      error('[GNODE] Object type necessary. Please specify');
+        error('[GNODE] Object type necessary. Please specify');
     end
     
-  end
+end
 
-  legal_fields = cell(session.connector.validator.getAll(object_type));
-  legal_fields{end+1} = 'id'; % Additionally, we keep neo_id
-  
-  fields = fieldnames(obj);
-  new_object = struct();
+legal_fields = cell(session.connector.validator.getAll(object_type));
+legal_fields{end+1} = 'id'; % Additionally, we keep neo_id
+legal_fields{end+1} = 'metadata';
 
-  for i = 1:size(fields, 1)
+fields = fieldnames(obj);
+new_object = struct();
+
+for i = 1:size(fields, 1)
     if (any(ismember(legal_fields, fields{i})))
-      new_object = setfield(new_object, fields{i}, getfield(obj, fields{i}));
+        new_object = setfield(new_object, fields{i}, getfield(obj, fields{i}));
     end
-  end
+end
 
-  new = new_object;
+new = new_object;
 
 end
 

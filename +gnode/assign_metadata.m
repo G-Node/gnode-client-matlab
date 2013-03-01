@@ -6,10 +6,10 @@ if isstruct(values) && isfield(values, 'id')
     parts = regexp(values.id, '_', 'split');
     metadata = {parts{2}};
 elseif iscell(values)
-     for j = 1:length(values)
-         parts = regexp(values{j}.id, '_', 'split');
-         metadata{j} = parts{2};
-     end
+    for j = 1:length(values)
+        parts = regexp(values{j}.id, '_', 'split');
+        metadata{j} = parts{2};
+    end
 else
     error('[GNODE] Invalid input!');
 end
