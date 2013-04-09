@@ -8,13 +8,13 @@
     "username": "bob",
     "password": "pass",
     
-    "host": "141.84.42.103",
-    "port": 80,
+    "host": "predata.g-node.org",
+    "port": 8010,
     "prefix": "",
     "prefixData": "neo",
     "prefixMetaData": "metadata",
 
-    "apiDefinition": "/home/aljoscha/code/gnode/gnode-client-matlab/requirements.json",
+    "apiDefinition": "/opt/gnode-client-matlab/requirements.json",
 
     "caching" : "MEMORY",
     "db": ""

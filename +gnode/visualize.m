@@ -33,7 +33,8 @@ x_axis = linspace(r_offset, r_offset + r_length / r_sr * 1000, r_length);
 data = zeros(r_length, length(objects));
 
 for o = 1:length(objects)
-    data(:, o) = objects{o}.signal.data(1:500);
+    sz = size(objects{o}.signal.data)
+    data(:, o) = objects{o}.signal.data(1:sz);
 end
 
 plot(x_axis, data);
