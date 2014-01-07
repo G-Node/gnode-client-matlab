@@ -1,15 +1,15 @@
 {
 
     "_comment": "G-NODE CONFIGURATION FILE",
-    "_comment": "Required fields:"
+    "_comment": "Required fields:",
     "required": ["username", "password", "host", "port", "path",
 		 "apiVersion", "caching", "db"],
     
-    "username": "bob",
-    "password": "pass",
+    "username": "demo",
+    "password": "demo",
     
-    "host": "predata.g-node.org",
-    "port": 8010,
+    "host": "test.g-node.org",
+    "port": 80,
     "prefix": "",
     "prefixData": "neo",
     "prefixMetaData": "metadata",
