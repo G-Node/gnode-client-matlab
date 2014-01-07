@@ -1,20 +1,27 @@
-function l = get_list(session, object_type, limit)
-  %GET_LIST Retrieves an exhaustive list of all objects of specified
-  %object type that are available in the specified session. A limit
-  %may be specified.
-  %
-  %  list = get_list(g, 'analogsignal', 100) returns a list of all
-  %  available signals limited to 100 entries.
+function final_list = get_list(session, object_type, limit, offset)
+%GET_LIST Retrieves an exhaustive list of all objects of specified
+%object type that are available in the specified session. A limit
+%may be specified.
+%
+%  list = get_list(g, 'analogsignal', 100, 0) returns a list of all
+%  available signals limited to 100 entries and with an offset of
+%  zero (that is, starting at first signal).
 
-  if (nargin < 3)
-    limit = 0;
-  end
+if (nargin < 4)
+    offset = 0;
+end
 
-  try
-    l = cell(session.connector.retrieveList(object_type, limit));
-  catch
+if (nargin < 3)
+    limit = 100;
+end
+
+try
+    l = cell(session.connector.retrieveList(object_type, limit, offset));
+catch
     error('[GNODE] Could not retrieve list!');
-  end
+end
+
+final_list = cellfun(@(x) char(x), l, 'UniformOutput', 0);
 
 end
 

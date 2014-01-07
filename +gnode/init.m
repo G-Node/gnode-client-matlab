@@ -1,88 +1,100 @@
 function session = init(filename, password, server)
-  %INIT Creates a G-Node data store session, returning a *structure*
-  %that is passed to most G-Node utility methods.
-  %
-  %  g = init('DEFAULT') returns a session g defaulting to standard
-  %  settings. This configuration can be found (and, if necessary,
-  %  modified) under $TBDIR/default.json.
-  %
-  %  g = init(username, password, server) returns a session g using
-  %  specified authentication/server settings but defaulting to
-  %  $TBDIR/default.json for everything else.
+%INIT Creates a G-Node data store session, returning a *structure*
+%that is passed to most G-Node utility methods.
+%
+%  g = init('DEFAULT') returns a session g defaulting to standard
+%  settings. This configuration can be found (and, if necessary,
+%  modified) under $TBDIR/default.json.
+%
+%  g = init(username, password, server) returns a session g using
+%  specified authentication/server settings but defaulting to
+%  $TBDIR/default.json for everything else.
 
-  import gnode.*;
+import gnode.*;
 
-  % set_up_classpath();
+% set_up_classpath();
 
-  import org.gnode.lib.client.*;
-  import org.gnode.lib.conf.*;
+import org.gnode.lib.client.*;
+import org.gnode.lib.conf.*;
+import org.gnode.lib.util.Network;
 
-  % Settings
-  toolbox_name = 'gnode';
-  config_file = 'default.json';
-  
-  default_config_location = fullfile(toolboxdir(toolbox_name), config_file);
+% First, check connection:
+if ~Network.check('http://www.google.com')
+   error('[GNODE] Network not available; please check internet connection.');
+end
 
-  % Helper
-  function default_configuration = get_default
+% Settings
+config_file = 'default.json';
+default_config_location = [fileparts(mfilename('fullpath')) '/../' config_file];
+
+% Determine intended configuration source
+if (nargin == 1)
+
+    if strcmp(filename, 'default')
+        settings = get_default(default_config_location);
+    elseif strcmp(filename, 'home')
+        if ispc
+            homedir = getenv('USERPROFILE');
+        else
+            homedir = getenv('HOME');
+        end
+        home_path = fullfile(homedir, 'gnode.json');
+        settings = get_default(home_path);
+    else
+        settings_some = ConfigurationReader.fromFile(filename);
+        try
+            settings = settings_some.get();
+        catch
+            settings = get_default();
+        end
+    end
+
+elseif (nargin == 3)
+
+    username = filename;
+
+    default_settings = get_default(default_config_location);
+    settings = ConfigurationReader.create(username, password, ...
+          server, ...
+          default_settings.port, ...
+          default_settings.prefix, ...
+          default_settings.prefixData, ...
+          default_settings.prefixMetaData, ...
+          default_settings.apiDefinition, ...
+          default_settings.caching, ...
+          default_settings.db);
+
+else
+
+    settings = get_default(default_config_location);
+
+end
+
+try
+    t = TransferManager(settings);
+catch
+    error('[GNODE] Could not initialize session from specified configuration');
+end
+
+session.connector = t; % Store transfer manager
+session.settings = settings; % Keep configuration
+session.logontime = clock;
+
+end
+
+% Helper
+function default_configuration = get_default(location)
 
     import org.gnode.lib.conf.*; % Scope issue: reimport necessary
-    settings_some = ConfigurationReader.fromFile(default_config_location);
+    settings_some = ConfigurationReader.fromFile(location);
 
     try
-      settings = settings_some.get();
+        settings = settings_some.get();
     catch
-      error('[GNODE] Could not initialize from configuration');
+        error('[GNODE] Could not initialize from configuration');
     end
 
-    default_configuration = settings
-
-  end
-
-  % Determine intended configuration source
-  if (nargin == 1)
-
-    if (strcmp(filename, 'default'))
-
-      settings = get_default();
-
-    else
-    
-      settings_some = ConfigurationReader.fromFile(filename);
-      
-      try
-	settings = settings_some.get();
-      catch
-	settings = get_default();
-      end
-
-    end
-
-  elseif (nargin == 3)
-
-    default_settings = get_default();
-    settings = ConfigurationReader.create(filename, password, \
-					  server, \
-					  default_settings.port, \
-					  default_settings.path, \
-					  default_settings.apiDefinition, \
-					  default_settings.caching, \
-					  default_settings.db);
-
-  else
-
-    settings = get_default();
-
-  end
-
-  try
-    t = TransferManager(settings);
-  catch
-    error('[GNODE] Could not initialize session from specified configuration');
-  end
-
-  session.connector = t; % Store transfer manager
-  session.settings = settings; % Keep configuration
+    default_configuration = settings;
 
 end
 

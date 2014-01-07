@@ -1,19 +1,17 @@
 function l = get_range(session, object_type, start, stop)
-  %GET_RANGE Retrieves multiple G-Node data store objects of given
-  %type between two numerical markers.
-  %
-  %  objects = get_range(g, 'analogsignal', 100, 500) returns all
-  %  available signals between IDs 'analogsignal_100' and
-  %  'analogsignal_500'.
+%GET_RANGE Retrieves multiple G-Node data store objects of given
+%type between two numerical markers.
+%
+%  objects = get_range(g, 'analogsignal', 100, 500) returns all
+%  available signals between IDs 'analogsignal_100' and
+%  'analogsignal_500'.
 
-  n = stop - start + 1;
-  ids = cell(1,n);
-  
-  for i=1:n
-    ids{i} = [object_type '_' num2str((start -1) + i)];
-  end
+n = stop - start + 1;
+for j=1:n
+    ids{j} = sprintf('%s_%s', object_type, num2str((start -1) + j));
+end
 
-  l = gnode.get(session, ids.');
+l = gnode.get(session, ids);
 
 end
 

@@ -1,22 +1,24 @@
 function u = get_updated(session, obj, id)
-  %GET_UPDATED Retrieves object after performing a remote update;
-  %documentation for wrapped get()/update() functions applies.
-  %
-  %  updated_object = get_updated(g, modified_object,
-  %  'analogsignal_947') pushes changes to remote server and returns
-  %  the stored object including successfully applied changes.
+%GET_UPDATED Retrieves object after performing a remote update;
+%documentation for wrapped get()/update() functions applies.
+%
+%  updated_object = get_updated(g, modified_object,
+%  'analogsignal_947') pushes changes to remote server and returns
+%  the stored object including successfully applied changes.
 
-  import gnode.*;
-	 
-  % Update object and return updated copy
+import gnode.*;
 
-  if (nargin < 3)
-    updated_id = update(session, obj){1};
-  else
-    updated_id = update(session, obj, id){1};
-  end
+% Update object and return updated copy
 
-  u = get(session, updated_id);
+if (nargin < 3)
+    updated_id = update(session, obj);
+    updated_id = updated_id{1};
+else
+    updated_id = update(session, obj, id);
+    updated_id = updated_id{1};
+end
+
+u = get(session, updated_id);
 
 end
 
