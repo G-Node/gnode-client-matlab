@@ -9,7 +9,8 @@ else
 end
 
 components = regexp(id, '_', 'split');
-num_id = str2num(components{end});
+%num_id = str2num(components{end});
+num_id = components{end};
 
 end
 
