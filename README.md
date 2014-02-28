@@ -10,64 +10,52 @@
 
 The G-Node MATLAB Toolbox (GMT) allows convenient access to
 electro-physiological recordings stored in the G-Node [Data
-Store](http://portal.g-node.org/data) through the MATLAB command
+Store (Beta)](http://test.g-node.org) through the MATLAB command
 line. Requirements are
 
 * MATLAB R2008b or higher on any platform supporting Java (Linux, Mac,
   Windows), as well as a
 
-* G-Node account (available [here](http://portal.g-node.org/data)).
+* G-Node account (user "demo" with password "demo" or a new one 
+  available [here](http://test.g-node.org)).
 
 In addition, a backend for persistent and lab-wide caching is
 recommended but not necessary (e.g., MongoDB).
 
 ## Installation
 
-Installation of GMT is similar to that of most MATLAB
-toolboxes. Simply download the newest release and drop it into your
-toolbox folder. In order to get the latest stable version (0.41b),
-follow these steps:
+Installation of the G-Node Toolbox is similar to that of most MATLAB
+toolboxes. Follow these steps:
 
-1. [Download one of the provided archives from GitHub.](http://github.com/G-Node/gnode-client-matlab/downloads)
-
-2. Unzip/untar the release to your MATLAB toolbox directory. In most
-cases, this corresponds to `$MATLAB_HOME/toolbox`. Your toolbox
-directory should now contain a folder `gnode`.
-
-3. Adjust the account settings in the default configuration file
-(`$MATLAB_HOME/toolbox/gnode/default.json`):
-
-* Set `username` to the name of the G-Node account you want to use.
-
-* Set `password` to your password. (All transfer is mediated by a
-secure connection.)
-
-* Set `apiDefinition` to the supplied `requirements.json` file. For
-instance, if your `$MATLAB_HOME` corresponds to `/home/john/matlab/`,
-you should put `/home/john/matlab/toolbox/gnode/requirements.json`.
-
-4. Open your MATLAB `classpath.txt` and add the supplied Java archive
-`lib/client.jar` as the topmost entry.
-
-4. Open MATLAB.
-
-5. Check that your installation was successful by typing `import
-gnode.*;` at the MATLAB prompt. If there are no errors, you can start
-using the toolbox.
-
-6. Read the
-[documentation](https://github.com/g-node/gnode-client-matlab/wiki).
-
-If you want to track the development branch, follow these steps. NB,
-release channel updates may break compatibility or introduce bugs.
-
-1. Locate your MATLAB toolbox directory. In most cases, this
-   corresponds to `$MATLAB_HOME/toolbox`.
-
-2. Clone the git repository from GitHub via `git clone
-   https://github.com/g-node/gnode-client-matlab.git`.
-
-3. Proceed from `3` in the outline above.
+1. [Download and unzip the toolbox](https://github.com/G-Node/gnode-client-matlab/archive/master.zip) or 
+   clone it from GitHub via
+   `git clone https://github.com/g-node/gnode-client-matlab.git`
+   somewhere locally (assuming to `$MATLAB_HOME/toolbox`)
+2. Adjust the default settings in the default configuration file
+   (`$MATLAB_HOME/toolbox/gnode-client-matlab/default.json`):
+   * Set `apiDefinition` as a path to the supplied `requirements.json` file. 
+   For instance, assuming your `$MATLAB_HOME` corresponds to `/home/john/matlab/`, you
+   should put `/home/john/matlab/toolbox/gnode-client-matlab/requirements.json` 
+   if you're on Linux or `C:\\matlab\\toolbox\\gnode-client-matlab\\requirements.json` 
+   if on Windows Platform (Note the double slash in the path).
+3. Open MATLAB.
+4. Add the toolbox folder to the path either
+   * via menu (permanently, recommended) 
+   File -> Set Path -> Add Folder.. select `$MATLAB_HOME/toolbox/gnode-client-matlab/
+   * or using addpath function 
+   `>> addpath('$MATLAB_HOME/toolbox/gnode-client-matlab')` 
+   (valid for only one Matlab session)
+5. Add the Java library to the path by either
+   * adding a path to the .jar file 
+   (`$MATLAB_HOME/toolbox/gnode-client-matlab/lib/client.jar`) as the 
+   top line in the default Matlab classpath file (permanently, recommended) 
+   located usually at `$MATLAB_HOME/toolbox/local/classpath.txt` or 
+   * or using addjavapath function 
+   `>> addjavapath('$MATLAB_HOME/toolbox/gnode-client-matlab')` 
+   (valid for only one Matlab session)
+6. Check that your installation was successful by typing `import gnode.*;` at the
+   MATLAB prompt. If there are no errors, you can start using the toolbox.
+7. Read the [documentation](https://github.com/g-node/gnode-client-matlab/wiki).
 
 ## Getting started
 
