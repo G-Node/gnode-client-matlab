@@ -30,28 +30,29 @@ toolboxes. Follow these steps:
 1. [Download and unzip the toolbox](https://github.com/G-Node/gnode-client-matlab/archive/master.zip) or 
    clone it from GitHub via
    `git clone https://github.com/g-node/gnode-client-matlab.git`
-   somewhere locally (assuming to `$MATLAB_HOME/toolbox`)
+   to your local Matlab toolbox directory (for example, `$MATLAB_HOME/toolbox`)
 2. Adjust the default settings in the default configuration file
-   (`$MATLAB_HOME/toolbox/gnode-client-matlab/default.json`):
+   (`$MATLAB_HOME/toolbox/gnode-client-matlab-master/default.json`):
    * Set `apiDefinition` as a path to the supplied `requirements.json` file. 
-   For instance, assuming your `$MATLAB_HOME` corresponds to `/home/john/matlab/`, you
-   should put `/home/john/matlab/toolbox/gnode-client-matlab/requirements.json` 
-   if you're on Linux or `C:\\matlab\\toolbox\\gnode-client-matlab\\requirements.json` 
-   if on Windows Platform (Note the double slash in the path).
-3. Open MATLAB.
-4. Add the toolbox folder to the path either
-   * via menu (permanently, recommended) 
-   File -> Set Path -> Add Folder.. select `$MATLAB_HOME/toolbox/gnode-client-matlab/
-   * or using addpath function 
-   `>> addpath('$MATLAB_HOME/toolbox/gnode-client-matlab')` 
-   (valid for only one Matlab session)
-5. Add the Java library to the path by either
+   On Linux, for instance, assuming your `$MATLAB_HOME` corresponds to `/home/john/matlab/`, you
+   should put `/home/john/matlab/toolbox/gnode-client-matlab/requirements.json`.
+   On Windows, this should be like `C:\\matlab\\toolbox\\gnode-client-matlab\\requirements.json` 
+   depending on your configuration (Note the double slashes in the path).
+3. Add the Java library to the path by either
    * adding a path to the .jar file 
    (`$MATLAB_HOME/toolbox/gnode-client-matlab/lib/client.jar`) as the 
-   top line in the default Matlab classpath file (permanently, recommended) 
-   located usually at `$MATLAB_HOME/toolbox/local/classpath.txt` or 
-   * or using addjavapath function 
-   `>> addjavapath('$MATLAB_HOME/toolbox/gnode-client-matlab')` 
+   top line in the default Matlab classpath file 
+   located usually at `$MATLAB_HOME/toolbox/local/classpath.txt`
+   (permanently, recommended)
+   * or using the javaaddpath function 
+   `>> javaaddpath('$MATLAB_HOME/toolbox/gnode-client-matlab')` 
+   (valid for only one Matlab session)
+4. Open MATLAB.
+5. Add the toolbox folder to the path either
+   * via menu (permanently, recommended) 
+   File -> Set Path -> Add Folder.. select `$MATLAB_HOME/toolbox/gnode-client-matlab/`
+   * or using the addpath function: 
+   `>> addpath('$MATLAB_HOME/toolbox/gnode-client-matlab')` 
    (valid for only one Matlab session)
 6. Check that your installation was successful by typing `import gnode.*;` at the
    MATLAB prompt. If there are no errors, you can start using the toolbox.
