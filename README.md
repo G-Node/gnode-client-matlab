@@ -45,7 +45,7 @@ toolboxes. Follow these steps:
    located usually at `$MATLAB_HOME/toolbox/local/classpath.txt`
    (permanently, recommended)
    * or using the javaaddpath function 
-   `>> javaaddpath('$MATLAB_HOME/toolbox/gnode-client-matlab')` 
+   `>> javaaddpath('$MATLAB_HOME/toolbox/gnode-client-matlab/lib/client.jar')` 
    (valid for only one Matlab session)
 4. Open MATLAB.
 5. Add the toolbox folder to the path either
